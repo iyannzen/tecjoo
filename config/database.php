@@ -10,6 +10,11 @@ function getDbConnection() {
         $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
         $pdo = new PDO($dsn, $user, $pass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Samakan zona waktu sesi MySQL dengan PHP (Asia/Jakarta = +07:00).
+        // Tanpa ini, NOW() di server Railway memakai UTC sehingga jam pesanan
+        // tersimpan 7 jam lebih lambat dan urutan/tanggalnya tidak selaras.
+        $pdo->exec("SET time_zone = '+07:00'");
         
         return $pdo; 
     } catch (\PDOException $e) {

@@ -41,7 +41,7 @@ $offset     = ($page - 1) * $perPage;
 
 $stmt = $pdo->prepare(
     "SELECT o.*, u.name AS user_name, u.email AS user_email FROM orders o JOIN users u ON u.id = o.user_id
-     $whereSql ORDER BY o.created_at DESC LIMIT :limit OFFSET :offset"
+     $whereSql ORDER BY o.created_at DESC, o.id DESC LIMIT :limit OFFSET :offset"
 );
 foreach ($params as $k => $v) $stmt->bindValue($k, $v);
 $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
