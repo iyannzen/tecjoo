@@ -1,0 +1,48 @@
+## TechZone - Apache Configuration
+
+# Aktifkan rewrite engine (disiapkan untuk pretty URL produk di tahap berikutnya).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+</IfModule>
+
+# Custom error pages (path relatif terhadap document root aplikasi).
+# CATATAN UNTUK XAMPP: jika project diakses lewat http://localhost/techzone/
+# (docroot = htdocs, bukan htdocs/techzone), ubah baris di bawah menjadi:
+#   ErrorDocument 404 /techzone/404.php
+#   ErrorDocument 500 /techzone/500.php
+# Untuk hosting production (docroot = folder project ini), baris berikut sudah benar apa adanya.
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php
+
+# Cegah akses langsung ke folder-folder sensitif dari browser.
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(sql|log|md)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  <FilesMatch "\.(sql|log|md)$">
+    Order allow,deny
+    Deny from all
+  </FilesMatch>
+</IfModule>
+
+# Cegah eksekusi script PHP di dalam folder uploads (mencegah upload shell).
+<IfModule mod_php.c>
+  <Directory "uploads">
+    php_flag engine off
+  </Directory>
+</IfModule>
+
+# Jangan pernah menyajikan file key lokal Midtrans.
+<Files "midtrans.local.php">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>
+
+Options -Indexes

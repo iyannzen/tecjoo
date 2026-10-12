@@ -1,0 +1,2 @@
+config/midtrans.local.php
+storage/logs/*.log
