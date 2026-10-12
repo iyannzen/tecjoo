@@ -180,8 +180,7 @@
     }
 
     /* ---------- Tema terang / gelap (toko) ---------- */
-    var themeBtn = document.getElementById('tz-theme-toggle');
-    if (themeBtn) {
+    document.querySelectorAll('#tz-theme-toggle, .js-theme-toggle').forEach(function (themeBtn) {
       themeBtn.addEventListener('click', function () {
         var dark = html.getAttribute('data-theme') === 'dark';
         html.classList.add('tz-theme-anim');
@@ -189,7 +188,7 @@
         try { localStorage.setItem('tz_theme', dark ? 'light' : 'dark'); } catch (e) {}
         setTimeout(function () { html.classList.remove('tz-theme-anim'); }, 600);
       });
-    }
+    });
 
     /* ---------- Hitung mundur batas pembayaran ---------- */
     document.querySelectorAll('[data-countdown]').forEach(function (box) {

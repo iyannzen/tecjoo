@@ -174,8 +174,9 @@ require __DIR__ . '/includes/navbar.php';
           </p>
         </div>
 
+        <div class="tz-ptools">
         <form method="GET" class="animate-fade-in-up delay-200 flex items-center gap-2 bg-navy-800/80 border border-navy-700 rounded-full px-1 py-1">
-          <?php foreach ($_GET as $k => $v) : if ($k === 'sort') continue; ?>
+          <?php foreach ($_GET as $k => $v) : if ($k === 'sort' || !is_string($v)) continue; ?>
             <input type="hidden" name="<?= e($k) ?>" value="<?= e($v) ?>">
           <?php endforeach; ?>
           <label class="text-xs text-gray-400 shrink-0 pl-3"><i class="fa-solid fa-arrow-down-wide-short mr-1"></i>Urutkan</label>
@@ -190,6 +191,21 @@ require __DIR__ . '/includes/navbar.php';
             <option class="text-navy-900" value="az" <?= $sort === 'az' ? 'selected' : '' ?>>A-Z</option>
           </select>
         </form>
+
+        <form action="<?= e(techzoneBaseUrl()) ?>/products.php" method="GET" id="cari" role="search" class="tz-psearch animate-fade-in-up delay-200"
+              data-suggest="<?= e(techzoneBaseUrl()) ?>/api/search-suggest.php">
+          <?php foreach (['kategori', 'brand', 'harga_min', 'harga_max', 'rating_min', 'tersedia'] as $keepKey):
+              if (isset($_GET[$keepKey]) && is_string($_GET[$keepKey]) && $_GET[$keepKey] !== ''): ?>
+            <input type="hidden" name="<?= e($keepKey) ?>" value="<?= e($_GET[$keepKey]) ?>">
+          <?php endif; endforeach; ?>
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" name="q" value="<?= e($q) ?>" placeholder="Cari produk..." autocomplete="off" aria-label="Cari produk" enterkeyhint="search">
+          <?php if ($q !== ''): ?>
+            <a href="<?= e(buildQueryUrl(['q' => null, 'page' => null, 'sort' => null])) ?>" class="tz-psearch__clear" aria-label="Hapus pencarian"><i class="fa-solid fa-xmark"></i></a>
+          <?php endif; ?>
+          <button type="submit" class="tz-psearch__btn">Cari</button>
+        </form>
+        </div>
       </div>
     </div>
 
@@ -367,9 +383,44 @@ require __DIR__ . '/includes/navbar.php';
   </div>
 </main>
 <script>
-  document.getElementById('techzone-filter-toggle')?.addEventListener('click', function () {
-    document.getElementById('techzone-filter-form')?.classList.toggle('hidden');
-    document.getElementById('techzone-filter-chevron')?.classList.toggle('rotate-180');
-  });
+  (function () {
+    var toggle  = document.getElementById('techzone-filter-toggle');
+    var form    = document.getElementById('techzone-filter-form');
+    var chevron = document.getElementById('techzone-filter-chevron');
+    var search  = document.querySelector('#cari input[name="q"]');
+
+    function openFilter() {
+      if (form && form.classList.contains('hidden')) {
+        form.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-180');
+      }
+    }
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        form.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+      });
+    }
+
+    function handleHash() {
+      if (location.hash === '#cari' && search) {
+        search.focus();
+      } else if (location.hash === '#kategori' && window.innerWidth < 768) {
+        openFilter();
+      }
+    }
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+
+    // Ikon cari di navbar (mobile) saat sudah berada di halaman ini: langsung fokus ke kolom cari.
+    document.querySelectorAll('.tz-nav__searchbtn').forEach(function (btn) {
+      btn.addEventListener('click', function (ev) {
+        if (!search) return;
+        ev.preventDefault();
+        search.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        search.focus();
+      });
+    });
+  })();
 </script>
 <?php require __DIR__ . '/includes/footer.php'; ?>

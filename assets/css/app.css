@@ -985,11 +985,6 @@ html.tz-theme-anim *, html.tz-theme-anim *::before, html.tz-theme-anim *::after 
 .tz-suggest__row em { flex: none; font-style: normal; font-weight: 800; font-size: .8rem; color: var(--gold-300); }
 .tz-suggest__all { display: flex; align-items: center; justify-content: space-between; margin-top: .3rem; padding: .75rem .8rem; border-radius: 12px; font-size: .78rem; font-weight: 700; color: var(--gold-300); border-top: 1px solid rgba(201,162,77,.15); transition: background .25s; }
 .tz-suggest__empty { padding: 1rem; font-size: .8rem; line-height: 1.6; color: #8b8470; }
-.tz-drawer__search { position: relative; margin: 0 1.2rem .4rem; }
-.tz-drawer__search > i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: .8rem; color: #7d7663; pointer-events: none; }
-.tz-drawer__search input { width: 100%; height: 44px; padding: 0 1rem 0 2.6rem; border-radius: 9999px; font-size: .85rem; color: #f5efe0; outline: none; background: rgba(255,255,255,.05) !important; border: 1px solid rgba(201,162,77,.25) !important; }
-.tz-drawer__search input:focus { border-color: var(--gold-400) !important; box-shadow: 0 0 0 4px rgba(201,162,77,.12); }
-.tz-drawer__search .tz-suggest { left: 0; right: 0; width: auto; max-height: 50vh; }
 
 
 /* tab Rekening Bank | E-Wallet (admin) */
@@ -1159,3 +1154,48 @@ body.tz-body::before, body.tz-admin::before, body.tz-admin::after { display: non
 .reveal.is-visible { transform: none; }
 .card-hover:hover { transform: translateY(-5px); }
 .tilt-hover { transition: none; will-change: auto; }
+
+/* ==========================================================================
+   Navbar mobile: menu utama pindah ke panel menu (drawer) + tombol cari
+   ========================================================================== */
+.tz-burger__label { display: none; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.tz-nav__searchbtn { display: none; }
+.tz-drawer__theme { display: none; width: 100%; text-align: left; background: none; border: 0; cursor: pointer; font-family: inherit; }
+.tz-drawer__main { display: block; }
+.tz-drawer__link--active { color: #fff; background: linear-gradient(90deg, rgba(201,162,77,.2), transparent); }
+.tz-drawer__link--active::before { content: ""; position: absolute; left: 0; top: 22%; bottom: 22%; width: 3px; border-radius: 3px; background: var(--gold-grad); }
+.tz-drawer__link--active i.ico { background: var(--gold-grad); color: var(--ink-900); }
+@media (min-width: 1024px) { .tz-drawer__main { display: none; } }
+@media (max-width: 1023px) {
+  .tz-nav__links { display: none; }
+  .tz-nav__actions { margin-left: auto; }
+  .tz-nav__searchbtn { display: grid; }
+  .tz-burger { width: auto; padding: 0 1rem 0 .85rem; display: inline-flex; align-items: center; justify-content: center; gap: .55rem; }
+  .tz-burger:hover { transform: none; }
+  .tz-burger__label { display: inline; }
+  .tz-desk-only { display: none; }
+}
+@media (max-width: 480px) {
+  .tz-hide-xs { display: none !important; }
+  .tz-drawer__theme { display: flex; }
+}
+@media (max-width: 380px) {
+  .tz-burger { width: 42px; padding: 0; }
+  .tz-burger__label { display: none; }
+}
+
+/* ==========================================================================
+   Katalog produk: Urutkan + kolom cari di bagian hero
+   ========================================================================== */
+.tz-ptools { display: flex; flex-direction: column; gap: .7rem; width: 100%; }
+@media (min-width: 768px) { .tz-ptools { flex-direction: row-reverse; align-items: center; width: auto; } .tz-psearch { width: 300px; } }
+.tz-psearch { position: relative; display: flex; align-items: center; height: 46px; border-radius: 9999px; background: rgba(255,255,255,.06); border: 1px solid rgba(201,162,77,.28); transition: border-color .3s, background .3s, box-shadow .3s; }
+.tz-psearch:focus-within { border-color: var(--gold-400); background: rgba(201,162,77,.08); box-shadow: 0 0 0 4px rgba(201,162,77,.12); }
+.tz-psearch > i.fa-magnifying-glass { flex: none; margin-left: 1rem; font-size: .8rem; color: #8f8878; pointer-events: none; }
+.tz-psearch input[type="text"] { flex: 1; min-width: 0; height: 100%; padding: 0 .6rem; border: 0 !important; border-radius: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; color: #f5efe0 !important; font-size: .85rem; }
+.tz-psearch input[type="text"]::placeholder { color: #7d7663 !important; }
+.tz-psearch__clear { flex: none; display: grid; place-items: center; width: 28px; height: 28px; margin-right: .25rem; border-radius: 9999px; font-size: .75rem; color: #a8a08c; transition: color .3s, background .3s; }
+.tz-psearch__clear:hover { color: #fff; background: rgba(201,162,77,.18); }
+.tz-psearch__btn { flex: none; height: 36px; margin-right: 5px; padding: 0 1.15rem; border-radius: 9999px; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-900); background: var(--gold-grad); transition: filter .3s, transform .3s; }
+.tz-psearch__btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.tz-psearch .tz-suggest { left: 0; right: 0; width: auto; max-height: 55vh; }
