@@ -22,7 +22,9 @@ function techzoneBaseUrl(): string
         return $baseUrl;
     }
 
-    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || 
+            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+    $scheme = $isSecure ? 'https' : 'http';
     $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';
 
     // Direktori root project dihitung dari lokasi file config/app.php ini,
