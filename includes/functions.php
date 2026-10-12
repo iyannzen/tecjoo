@@ -5,6 +5,9 @@
  * File ini menjadi titik masuk utama yang men-include konfigurasi dasar
  * (app config, koneksi database) dan menyediakan fungsi bantu yang
  * dipakai di banyak halaman.
+ *
+ * CATATAN: techzoneBaseUrl() dan techzoneStartSession() didefinisikan
+ * di config/app.php. Jangan dideklarasikan ulang di file ini.
  */
 
 if (!defined('TECHZONE_APP')) {
@@ -393,19 +396,4 @@ function renderPageHero(string $title, string $subtitle = '', string $icon = 'fa
       </svg>
     </section>
     <?php
-
-    /**
- * Mendapatkan base URL aplikasi secara dinamis (mendukung HTTPS Railway).
- */
-function techzoneBaseUrl(): string
-{
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || 
-                (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ||
-                (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') 
-                ? 'https://' : 'http://';
-                
-    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-    
-    return $protocol . $host;
-}
 }
