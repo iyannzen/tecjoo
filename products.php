@@ -150,10 +150,13 @@ require __DIR__ . '/includes/navbar.php';
 <main class="pb-8">
 
   <!-- HERO BAR -->
-  <section class="relative bg-navy-900 overflow-hidden">
-    <div class="absolute inset-0 grid-pattern opacity-25"></div>
-    <div class="absolute -top-10 left-10 w-56 h-56 bg-cyan-500/20 rounded-full blur-3xl animate-blob"></div>
-    <div class="absolute -bottom-16 right-10 w-56 h-56 bg-blue-600/20 rounded-full blur-3xl animate-blob" style="animation-delay:3s"></div>
+  <section class="tz-phero relative bg-navy-900">
+    <!-- Dekorasi dipotong di wrapper sendiri, supaya dropdown pencarian tidak ikut terpotong -->
+    <div class="tz-phero__decor">
+      <div class="absolute inset-0 grid-pattern opacity-25"></div>
+      <div class="absolute -top-10 left-10 w-56 h-56 bg-cyan-500/20 rounded-full blur-3xl animate-blob"></div>
+      <div class="absolute -bottom-16 right-10 w-56 h-56 bg-blue-600/20 rounded-full blur-3xl animate-blob" style="animation-delay:3s"></div>
+    </div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
       <nav class="text-xs text-gray-400 mb-3 animate-fade-in-up">

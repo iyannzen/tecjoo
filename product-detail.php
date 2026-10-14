@@ -151,6 +151,10 @@ require __DIR__ . '/includes/navbar.php';
         <div class="bg-gray-100 text-gray-500 text-sm font-medium text-center py-3 rounded-lg mb-6">Stok produk ini sedang habis</div>
       <?php endif; ?>
 
+      <?php if (!isUserLoggedIn()): ?>
+        <p class="text-xs text-gray-500 -mt-3 mb-5"><i class="fa-solid fa-lock mr-1 text-cyan-600"></i>Masuk dulu untuk menambah ke keranjang, membeli, atau menyimpan ke wishlist. <a href="<?= e(techzoneBaseUrl()) ?>/login.php" class="text-cyan-600 font-semibold hover:underline">Masuk</a></p>
+      <?php endif; ?>
+
       <form action="<?= e(techzoneBaseUrl()) ?>/actions/wishlist.php" method="POST" class="inline">
         <?= csrfField() ?>
         <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">

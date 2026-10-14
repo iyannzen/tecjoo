@@ -70,6 +70,7 @@ require __DIR__ . '/../includes/header.php';
       <?php endif; ?>
 
       <div class="bg-white border border-gray-100 rounded-xl overflow-hidden">
+        <div class="tz-tablewrap">
         <table class="w-full text-sm">
           <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
             <tr>
@@ -103,6 +104,7 @@ require __DIR__ . '/../includes/header.php';
             <?php endforeach; ?>
           </tbody>
         </table>
+        </div>
       </div>
     </main>
   </div>

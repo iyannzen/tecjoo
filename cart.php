@@ -5,6 +5,9 @@ require_once __DIR__ . '/includes/csrf.php';
 require_once __DIR__ . '/includes/cart_helpers.php';
 require_once __DIR__ . '/includes/product_helpers.php';
 
+// Keranjang hanya untuk user yang sudah login.
+requireUserLogin();
+
 $pdo    = getDbConnection();
 $cartId = getOrCreateCartId($pdo);
 $items  = getCartItems($pdo, $cartId);

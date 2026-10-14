@@ -31,6 +31,7 @@ $tzCrumb = trim(explode('|', $pageTitle ?? 'Admin')[0]);
     <a href="<?= e(techzoneBaseUrl()) ?>/index.php" target="_blank" class="tz-pill-link hidden sm:inline-flex">
       <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Toko
     </a>
+    <button type="button" class="tz-icon-btn tz-admin-theme js-theme-toggle" aria-label="Ganti tema terang/gelap" title="Mode terang / gelap"><i class="fa-solid fa-moon tz-theme-ico-moon"></i><i class="fa-solid fa-sun tz-theme-ico-sun"></i></button>
     <div class="tz-user">
       <span class="tz-avatar"><?= e(strtoupper(substr($admin['name'] ?? 'A', 0, 1))) ?></span>
       <span class="n hidden sm:block"><?= e($admin['name'] ?? 'Admin') ?></span>

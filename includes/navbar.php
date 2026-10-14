@@ -5,12 +5,15 @@ $navUser    = isUserLoggedIn() ? currentUser() : null;
 $navIsAdmin = isAdminLoggedIn();
 $base       = techzoneBaseUrl();
 
+// Keranjang hanya milik user yang login; pengunjung tidak dibuatkan keranjang sama sekali.
 $cartBadgeCount = 0;
-try {
-    $navPdo = getDbConnection();
-    $cartBadgeCount = getCartItemCount($navPdo, getOrCreateCartId($navPdo));
-} catch (Throwable $e) {
-    $cartBadgeCount = 0;
+if ($navUser) {
+    try {
+        $navPdo = getDbConnection();
+        $cartBadgeCount = getCartItemCount($navPdo, getOrCreateCartId($navPdo));
+    } catch (Throwable $e) {
+        $cartBadgeCount = 0;
+    }
 }
 
 $navUnreadNotif = 0;
@@ -61,7 +64,7 @@ if ($navUser) {
 
     <div class="tz-nav__actions">
       <a href="<?= e($base) ?>/products.php#cari" class="tz-icon-btn tz-nav__searchbtn" aria-label="Cari produk" title="Cari produk"><i class="fa-solid fa-magnifying-glass"></i></a>
-      <button type="button" class="tz-icon-btn tz-hide-xs" id="tz-theme-toggle" aria-label="Ganti tema terang/gelap" title="Mode terang / gelap"><i class="fa-solid fa-moon tz-theme-ico-moon"></i><i class="fa-solid fa-sun tz-theme-ico-sun"></i></button>
+      <button type="button" class="tz-icon-btn" id="tz-theme-toggle" aria-label="Ganti tema terang/gelap" title="Mode terang / gelap"><i class="fa-solid fa-moon tz-theme-ico-moon"></i><i class="fa-solid fa-sun tz-theme-ico-sun"></i></button>
       <a href="<?= e($base) ?>/cart.php" class="tz-icon-btn" aria-label="Keranjang">
         <i class="fa-solid fa-bag-shopping"></i>
         <?php if ($cartBadgeCount > 0): ?><span class="tz-badge badge-pop"><?= $cartBadgeCount > 9 ? '9+' : $cartBadgeCount ?></span><?php endif; ?>
@@ -150,7 +153,6 @@ if ($navUser) {
     <a href="<?= e($base) ?>/products.php" class="tz-drawer__link tz-desk-only" style="--i:13"><span><i class="fa-solid fa-microchip ico"></i>Semua Produk</span><i class="fa-solid fa-arrow-right text-[10px] opacity-40"></i></a>
     <a href="<?= e($base) ?>/cart.php" class="tz-drawer__link" style="--i:14"><span><i class="fa-solid fa-bag-shopping ico"></i>Keranjang</span><?php if ($cartBadgeCount > 0): ?><span class="tz-dbadge"><?= (int) $cartBadgeCount ?></span><?php else: ?><i class="fa-solid fa-arrow-right text-[10px] opacity-40"></i><?php endif; ?></a>
     <a href="<?= e($base) ?>/faq.php" class="tz-drawer__link" style="--i:15"><span><i class="fa-solid fa-circle-question ico"></i>Bantuan &amp; FAQ</span><i class="fa-solid fa-arrow-right text-[10px] opacity-40"></i></a>
-    <button type="button" class="tz-drawer__link tz-drawer__theme js-theme-toggle" style="--i:16"><span><i class="fa-solid fa-circle-half-stroke ico"></i>Mode Terang / Gelap</span></button>
   </nav>
 
   <?php if ($navIsAdmin || $navUser): ?>

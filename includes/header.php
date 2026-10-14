@@ -29,8 +29,12 @@ $isAdminArea     = strpos($_SERVER['SCRIPT_NAME'] ?? '', '/admin/') !== false;
 <meta name="description" content="<?= e($pageDescription) ?>">
 <link rel="icon" type="image/svg+xml" href="<?= e(techzoneBaseUrl()) ?>/assets/images/favicon.svg">
 <script>
-  // Tema terang/gelap toko (disimpan di browser). Area admin selalu gelap.
+  // Tema terang/gelap toko (disimpan di browser).
   try { var tzT = localStorage.getItem('tz_theme'); if (tzT === 'dark' && !document.documentElement.classList.contains('tz-theme-admin')) document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}
+<?php if ($isAdminArea && strpos($bodyClass, 'tz-auth-page') === false): ?>
+  // Area admin: bawaan gelap, bisa diganti ke terang lewat tombol di topbar (disimpan terpisah dari tema toko).
+  try { if (localStorage.getItem('tz_admin_theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
+<?php endif; ?>
 </script>
 <script>
   // Intro hanya tampil sekali per sesi browser (dicek sebelum render agar tidak berkedip).

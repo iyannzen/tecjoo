@@ -179,13 +179,20 @@
       tick(); setInterval(tick, 1000);
     }
 
-    /* ---------- Tema terang / gelap (toko) ---------- */
+    /* ---------- Tema terang / gelap (toko & admin) ---------- */
     document.querySelectorAll('#tz-theme-toggle, .js-theme-toggle').forEach(function (themeBtn) {
       themeBtn.addEventListener('click', function () {
-        var dark = html.getAttribute('data-theme') === 'dark';
         html.classList.add('tz-theme-anim');
-        if (dark) { html.removeAttribute('data-theme'); } else { html.setAttribute('data-theme', 'dark'); }
-        try { localStorage.setItem('tz_theme', dark ? 'light' : 'dark'); } catch (e) {}
+        if (html.classList.contains('tz-theme-admin')) {
+          // Admin: bawaan gelap; atribut data-theme="light" = terang. Disimpan di kunci terpisah dari toko.
+          var isLight = html.getAttribute('data-theme') === 'light';
+          if (isLight) { html.removeAttribute('data-theme'); } else { html.setAttribute('data-theme', 'light'); }
+          try { localStorage.setItem('tz_admin_theme', isLight ? 'dark' : 'light'); } catch (e) {}
+        } else {
+          var dark = html.getAttribute('data-theme') === 'dark';
+          if (dark) { html.removeAttribute('data-theme'); } else { html.setAttribute('data-theme', 'dark'); }
+          try { localStorage.setItem('tz_theme', dark ? 'light' : 'dark'); } catch (e) {}
+        }
         setTimeout(function () { html.classList.remove('tz-theme-anim'); }, 600);
       });
     });

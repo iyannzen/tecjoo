@@ -75,6 +75,7 @@ require __DIR__ . '/../includes/header.php';
       </form>
 
       <div class="bg-white border border-gray-100 rounded-xl overflow-hidden">
+        <div class="tz-tablewrap">
         <table class="w-full text-sm">
           <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
             <tr>
@@ -113,6 +114,7 @@ require __DIR__ . '/../includes/header.php';
             <?php endif; ?>
           </tbody>
         </table>
+        </div>
       </div>
       <p class="text-xs text-gray-400 mt-3"><i class="fa-solid fa-shield-halved mr-1"></i>Password user tidak pernah ditampilkan ke admin, sesuai kebijakan keamanan.</p>
     </main>

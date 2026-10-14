@@ -660,77 +660,77 @@ body.tz-admin.tz-auth-page { background: #050508; }
 .tz-empty { padding: 2.2rem 1rem; text-align: center; font-size: .84rem; color: #7d7663; } .tz-empty i { display: block; margin-bottom: .7rem; font-size: 1.6rem; color: rgba(201,162,77,.4); }
 
 /* ---------- Tema gelap: menimpa class Tailwind di seluruh halaman admin ---------- */
-.tz-admin * { border-color: rgba(255,255,255,.1); }
-body.tz-admin .bg-white { background: linear-gradient(160deg, rgba(255,255,255,.055), rgba(255,255,255,.018)); }
-body.tz-admin .min-h-screen.bg-gray-50 { background: transparent; }
-body.tz-admin .bg-gray-50, body.tz-admin [class~="bg-gray-50/60"] { background-color: rgba(255,255,255,.035); }
-body.tz-admin .bg-gray-100 { background-color: rgba(255,255,255,.07); }
-body.tz-admin .bg-gray-200 { background-color: rgba(255,255,255,.12); }
-body.tz-admin .shadow-card, body.tz-admin .shadow-lg, body.tz-admin .shadow-md, body.tz-admin .shadow-sm { box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 26px 50px -30px rgba(0,0,0,.85); }
-body.tz-admin .border-gray-50, body.tz-admin .border-gray-100 { border-color: rgba(255,255,255,.07); }
-body.tz-admin .border-gray-200 { border-color: rgba(255,255,255,.11); }
-body.tz-admin .border-gray-300 { border-color: rgba(255,255,255,.17); }
-body.tz-admin .divide-gray-50 > :not([hidden]) ~ :not([hidden]), body.tz-admin .divide-gray-100 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(255,255,255,.06); }
+html:not([data-theme="light"]) .tz-admin * { border-color: rgba(255,255,255,.1); }
+html:not([data-theme="light"]) body.tz-admin .bg-white { background: linear-gradient(160deg, rgba(255,255,255,.055), rgba(255,255,255,.018)); }
+html:not([data-theme="light"]) body.tz-admin .min-h-screen.bg-gray-50 { background: transparent; }
+html:not([data-theme="light"]) body.tz-admin .bg-gray-50, html:not([data-theme="light"]) body.tz-admin [class~="bg-gray-50/60"] { background-color: rgba(255,255,255,.035); }
+html:not([data-theme="light"]) body.tz-admin .bg-gray-100 { background-color: rgba(255,255,255,.07); }
+html:not([data-theme="light"]) body.tz-admin .bg-gray-200 { background-color: rgba(255,255,255,.12); }
+html:not([data-theme="light"]) body.tz-admin .shadow-card, html:not([data-theme="light"]) body.tz-admin .shadow-lg, html:not([data-theme="light"]) body.tz-admin .shadow-md, html:not([data-theme="light"]) body.tz-admin .shadow-sm { box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 26px 50px -30px rgba(0,0,0,.85); }
+html:not([data-theme="light"]) body.tz-admin .border-gray-50, html:not([data-theme="light"]) body.tz-admin .border-gray-100 { border-color: rgba(255,255,255,.07); }
+html:not([data-theme="light"]) body.tz-admin .border-gray-200 { border-color: rgba(255,255,255,.11); }
+html:not([data-theme="light"]) body.tz-admin .border-gray-300 { border-color: rgba(255,255,255,.17); }
+html:not([data-theme="light"]) body.tz-admin .divide-gray-50 > :not([hidden]) ~ :not([hidden]), html:not([data-theme="light"]) body.tz-admin .divide-gray-100 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(255,255,255,.06); }
 
-body.tz-admin .text-navy-900, body.tz-admin .text-gray-900, body.tz-admin .text-gray-800 { color: #f5efe0; }
-body.tz-admin .text-gray-700 { color: #ddd6c4; } body.tz-admin .text-gray-600 { color: #b5ae9b; }
-body.tz-admin .text-gray-500 { color: #978f7c; } body.tz-admin .text-gray-400 { color: #7b7463; }
-body.tz-admin .text-navy-700 { color: #cfc7b3; }
-body.tz-admin .hover\:text-navy-900:hover { color: #fff; }
-body.tz-admin .bg-cyan-500.text-navy-900, body.tz-admin .bg-cyan-400.text-navy-900, body.tz-admin .bg-cyan-300.text-navy-900,
-body.tz-admin [class*="from-cyan-"].text-navy-900, body.tz-admin .bg-gradient-to-r.text-navy-900 { color: #0a0a0f; }
-body.tz-admin .text-cyan-600, body.tz-admin .text-cyan-700, body.tz-admin .text-cyan-800 { color: #e6cb83; }
-body.tz-admin .hover\:text-cyan-600:hover, body.tz-admin .hover\:text-cyan-700:hover { color: #f6e7b4; }
-body.tz-admin [class~="bg-cyan-50"], body.tz-admin [class~="bg-cyan-50/60"], body.tz-admin [class~="bg-cyan-50/50"], body.tz-admin [class~="bg-cyan-50/40"], body.tz-admin [class~="bg-cyan-50/30"] { background-color: rgba(201,162,77,.1); }
-body.tz-admin .bg-cyan-100 { background-color: rgba(201,162,77,.2); }
-body.tz-admin .hover\:bg-cyan-50:hover { background-color: rgba(201,162,77,.14); }
-body.tz-admin .hover\:bg-gray-50:hover, body.tz-admin .hover\:bg-gray-100:hover { background-color: rgba(255,255,255,.06); }
-body.tz-admin .border-cyan-200, body.tz-admin .border-cyan-300 { border-color: rgba(201,162,77,.35); }
-body.tz-admin .hover\:border-cyan-300:hover { border-color: rgba(201,162,77,.6); }
+html:not([data-theme="light"]) body.tz-admin .text-navy-900, html:not([data-theme="light"]) body.tz-admin .text-gray-900, html:not([data-theme="light"]) body.tz-admin .text-gray-800 { color: #f5efe0; }
+html:not([data-theme="light"]) body.tz-admin .text-gray-700 { color: #ddd6c4; } html:not([data-theme="light"]) body.tz-admin .text-gray-600 { color: #b5ae9b; }
+html:not([data-theme="light"]) body.tz-admin .text-gray-500 { color: #978f7c; } html:not([data-theme="light"]) body.tz-admin .text-gray-400 { color: #7b7463; }
+html:not([data-theme="light"]) body.tz-admin .text-navy-700 { color: #cfc7b3; }
+html:not([data-theme="light"]) body.tz-admin .hover\:text-navy-900:hover { color: #fff; }
+html:not([data-theme="light"]) body.tz-admin .bg-cyan-500.text-navy-900, html:not([data-theme="light"]) body.tz-admin .bg-cyan-400.text-navy-900, html:not([data-theme="light"]) body.tz-admin .bg-cyan-300.text-navy-900,
+html:not([data-theme="light"]) body.tz-admin [class*="from-cyan-"].text-navy-900, html:not([data-theme="light"]) body.tz-admin .bg-gradient-to-r.text-navy-900 { color: #0a0a0f; }
+html:not([data-theme="light"]) body.tz-admin .text-cyan-600, html:not([data-theme="light"]) body.tz-admin .text-cyan-700, html:not([data-theme="light"]) body.tz-admin .text-cyan-800 { color: #e6cb83; }
+html:not([data-theme="light"]) body.tz-admin .hover\:text-cyan-600:hover, html:not([data-theme="light"]) body.tz-admin .hover\:text-cyan-700:hover { color: #f6e7b4; }
+html:not([data-theme="light"]) body.tz-admin [class~="bg-cyan-50"], html:not([data-theme="light"]) body.tz-admin [class~="bg-cyan-50/60"], html:not([data-theme="light"]) body.tz-admin [class~="bg-cyan-50/50"], html:not([data-theme="light"]) body.tz-admin [class~="bg-cyan-50/40"], html:not([data-theme="light"]) body.tz-admin [class~="bg-cyan-50/30"] { background-color: rgba(201,162,77,.1); }
+html:not([data-theme="light"]) body.tz-admin .bg-cyan-100 { background-color: rgba(201,162,77,.2); }
+html:not([data-theme="light"]) body.tz-admin .hover\:bg-cyan-50:hover { background-color: rgba(201,162,77,.14); }
+html:not([data-theme="light"]) body.tz-admin .hover\:bg-gray-50:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-gray-100:hover { background-color: rgba(255,255,255,.06); }
+html:not([data-theme="light"]) body.tz-admin .border-cyan-200, html:not([data-theme="light"]) body.tz-admin .border-cyan-300 { border-color: rgba(201,162,77,.35); }
+html:not([data-theme="light"]) body.tz-admin .hover\:border-cyan-300:hover { border-color: rgba(201,162,77,.6); }
 
-body.tz-admin .bg-red-50 { background-color: rgba(239,68,68,.11); }     body.tz-admin .hover\:bg-red-50:hover { background-color: rgba(239,68,68,.16); }
-body.tz-admin .border-red-100, body.tz-admin .border-red-200 { border-color: rgba(248,113,113,.3); }
-body.tz-admin .text-red-700, body.tz-admin .text-red-600 { color: #fca5a5; } body.tz-admin .text-red-500 { color: #f87171; }
-body.tz-admin .bg-emerald-50 { background-color: rgba(16,185,129,.11); } body.tz-admin .border-emerald-200 { border-color: rgba(52,211,153,.3); }
-body.tz-admin .text-emerald-800, body.tz-admin .text-emerald-700, body.tz-admin .text-emerald-600 { color: #6ee7b7; }
-body.tz-admin .bg-amber-50 { background-color: rgba(245,158,11,.11); } body.tz-admin .border-amber-200 { border-color: rgba(251,191,36,.3); }
-body.tz-admin .text-amber-800, body.tz-admin .text-amber-700, body.tz-admin .text-amber-600 { color: #fcd34d; }
-body.tz-admin .bg-orange-50 { background-color: rgba(251,146,60,.11); } body.tz-admin .border-orange-200 { border-color: rgba(251,146,60,.3); }
-body.tz-admin .text-orange-800, body.tz-admin .text-orange-700, body.tz-admin .text-orange-600 { color: #fdba74; }
-body.tz-admin .bg-blue-50, body.tz-admin [class~="bg-blue-50/60"] { background-color: rgba(96,165,250,.11); } body.tz-admin .border-blue-100 { border-color: rgba(96,165,250,.28); }
-body.tz-admin .text-blue-700, body.tz-admin .text-blue-600 { color: #93c5fd; }
-body.tz-admin .bg-purple-50 { background-color: rgba(167,139,250,.12); } body.tz-admin .text-purple-700, body.tz-admin .text-purple-600 { color: #d8b4fe; }
-body.tz-admin .bg-teal-50 { background-color: rgba(45,212,191,.11); }    body.tz-admin .text-teal-600 { color: #5eead4; }
-body.tz-admin .bg-indigo-50 { background-color: rgba(129,140,248,.12); } body.tz-admin .text-indigo-700 { color: #a5b4fc; }
-body.tz-admin .bg-navy-50 { background-color: rgba(255,255,255,.05); }
+html:not([data-theme="light"]) body.tz-admin .bg-red-50 { background-color: rgba(239,68,68,.11); }     html:not([data-theme="light"]) body.tz-admin .hover\:bg-red-50:hover { background-color: rgba(239,68,68,.16); }
+html:not([data-theme="light"]) body.tz-admin .border-red-100, html:not([data-theme="light"]) body.tz-admin .border-red-200 { border-color: rgba(248,113,113,.3); }
+html:not([data-theme="light"]) body.tz-admin .text-red-700, html:not([data-theme="light"]) body.tz-admin .text-red-600 { color: #fca5a5; } html:not([data-theme="light"]) body.tz-admin .text-red-500 { color: #f87171; }
+html:not([data-theme="light"]) body.tz-admin .bg-emerald-50 { background-color: rgba(16,185,129,.11); } html:not([data-theme="light"]) body.tz-admin .border-emerald-200 { border-color: rgba(52,211,153,.3); }
+html:not([data-theme="light"]) body.tz-admin .text-emerald-800, html:not([data-theme="light"]) body.tz-admin .text-emerald-700, html:not([data-theme="light"]) body.tz-admin .text-emerald-600 { color: #6ee7b7; }
+html:not([data-theme="light"]) body.tz-admin .bg-amber-50 { background-color: rgba(245,158,11,.11); } html:not([data-theme="light"]) body.tz-admin .border-amber-200 { border-color: rgba(251,191,36,.3); }
+html:not([data-theme="light"]) body.tz-admin .text-amber-800, html:not([data-theme="light"]) body.tz-admin .text-amber-700, html:not([data-theme="light"]) body.tz-admin .text-amber-600 { color: #fcd34d; }
+html:not([data-theme="light"]) body.tz-admin .bg-orange-50 { background-color: rgba(251,146,60,.11); } html:not([data-theme="light"]) body.tz-admin .border-orange-200 { border-color: rgba(251,146,60,.3); }
+html:not([data-theme="light"]) body.tz-admin .text-orange-800, html:not([data-theme="light"]) body.tz-admin .text-orange-700, html:not([data-theme="light"]) body.tz-admin .text-orange-600 { color: #fdba74; }
+html:not([data-theme="light"]) body.tz-admin .bg-blue-50, html:not([data-theme="light"]) body.tz-admin [class~="bg-blue-50/60"] { background-color: rgba(96,165,250,.11); } html:not([data-theme="light"]) body.tz-admin .border-blue-100 { border-color: rgba(96,165,250,.28); }
+html:not([data-theme="light"]) body.tz-admin .text-blue-700, html:not([data-theme="light"]) body.tz-admin .text-blue-600 { color: #93c5fd; }
+html:not([data-theme="light"]) body.tz-admin .bg-purple-50 { background-color: rgba(167,139,250,.12); } html:not([data-theme="light"]) body.tz-admin .text-purple-700, html:not([data-theme="light"]) body.tz-admin .text-purple-600 { color: #d8b4fe; }
+html:not([data-theme="light"]) body.tz-admin .bg-teal-50 { background-color: rgba(45,212,191,.11); }    html:not([data-theme="light"]) body.tz-admin .text-teal-600 { color: #5eead4; }
+html:not([data-theme="light"]) body.tz-admin .bg-indigo-50 { background-color: rgba(129,140,248,.12); } html:not([data-theme="light"]) body.tz-admin .text-indigo-700 { color: #a5b4fc; }
+html:not([data-theme="light"]) body.tz-admin .bg-navy-50 { background-color: rgba(255,255,255,.05); }
 
 /* tombol gelap lama (bg-navy-900) di area konten -> tombol emas-garis */
-body.tz-admin main .bg-navy-900, body.tz-admin .tz-dash .bg-navy-900 { color: #ecdba6; background-color: rgba(201,162,77,.1); border: 1px solid rgba(201,162,77,.38); transition: all .4s var(--ease); }
-body.tz-admin main a.bg-navy-900:hover, body.tz-admin main button.bg-navy-900:hover { background-color: rgba(201,162,77,.24); color: #fff; transform: translateY(-2px); box-shadow: 0 14px 26px -14px rgba(201,162,77,.7); }
-body.tz-admin main .bg-navy-900.text-white { color: #ecdba6; }
+html:not([data-theme="light"]) body.tz-admin main .bg-navy-900, html:not([data-theme="light"]) body.tz-admin .tz-dash .bg-navy-900 { color: #ecdba6; background-color: rgba(201,162,77,.1); border: 1px solid rgba(201,162,77,.38); transition: all .4s var(--ease); }
+html:not([data-theme="light"]) body.tz-admin main a.bg-navy-900:hover, html:not([data-theme="light"]) body.tz-admin main button.bg-navy-900:hover { background-color: rgba(201,162,77,.24); color: #fff; transform: translateY(-2px); box-shadow: 0 14px 26px -14px rgba(201,162,77,.7); }
+html:not([data-theme="light"]) body.tz-admin main .bg-navy-900.text-white { color: #ecdba6; }
 
 /* form */
-body.tz-admin input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=hidden]):not([type=range]), body.tz-admin select, body.tz-admin textarea {
+html:not([data-theme="light"]) body.tz-admin input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=hidden]):not([type=range]), html:not([data-theme="light"]) body.tz-admin select, html:not([data-theme="light"]) body.tz-admin textarea {
   color: #f5efe0; background-color: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); }
-body.tz-admin input:focus, body.tz-admin select:focus, body.tz-admin textarea:focus { background-color: rgba(201,162,77,.08); border-color: var(--gold-400); --tw-ring-color: rgba(201,162,77,.45); }
-body.tz-admin input::placeholder, body.tz-admin textarea::placeholder { color: #6a6453; }
-body.tz-admin option { background: #12121a; color: #f5efe0; }
-body.tz-admin input[type=file]::file-selector-button { margin-right: .8rem; padding: .35rem .8rem; border: 1px solid rgba(201,162,77,.4); border-radius: 8px; background: rgba(201,162,77,.12); color: #ecdba6; cursor: pointer; transition: background .3s; }
-body.tz-admin input[type=file]::file-selector-button:hover { background: rgba(201,162,77,.25); }
-body.tz-admin input:disabled, body.tz-admin select:disabled, body.tz-admin textarea:disabled { opacity: .5; }
-body.tz-admin label { color: #b5ae9b; }
+html:not([data-theme="light"]) body.tz-admin input:focus, html:not([data-theme="light"]) body.tz-admin select:focus, html:not([data-theme="light"]) body.tz-admin textarea:focus { background-color: rgba(201,162,77,.08); border-color: var(--gold-400); --tw-ring-color: rgba(201,162,77,.45); }
+html:not([data-theme="light"]) body.tz-admin input::placeholder, html:not([data-theme="light"]) body.tz-admin textarea::placeholder { color: #6a6453; }
+html:not([data-theme="light"]) body.tz-admin option { background: #12121a; color: #f5efe0; }
+html:not([data-theme="light"]) body.tz-admin input[type=file]::file-selector-button { margin-right: .8rem; padding: .35rem .8rem; border: 1px solid rgba(201,162,77,.4); border-radius: 8px; background: rgba(201,162,77,.12); color: #ecdba6; cursor: pointer; transition: background .3s; }
+html:not([data-theme="light"]) body.tz-admin input[type=file]::file-selector-button:hover { background: rgba(201,162,77,.25); }
+html:not([data-theme="light"]) body.tz-admin input:disabled, html:not([data-theme="light"]) body.tz-admin select:disabled, html:not([data-theme="light"]) body.tz-admin textarea:disabled { opacity: .5; }
+html:not([data-theme="light"]) body.tz-admin label { color: #b5ae9b; }
 
 /* tabel */
-body.tz-admin table thead, body.tz-admin table thead.bg-gray-50 { background: linear-gradient(180deg, rgba(201,162,77,.14), rgba(201,162,77,.05)); }
-body.tz-admin table thead th { color: #e6cb83; }
-body.tz-admin table tbody tr:hover { background-color: rgba(201,162,77,.07); }
-body.tz-admin table td, body.tz-admin table th { border-color: rgba(255,255,255,.06); }
-body.tz-admin code { background: rgba(255,255,255,.08); color: #ecdba6; padding: .1rem .4rem; border-radius: 6px; }
-body.tz-admin hr { border-color: rgba(255,255,255,.08); }
-body.tz-admin a:not([class]) { color: #e6cb83; }
-body.tz-admin ::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
-body.tz-admin main h1 { color: #f8f2e4; } body.tz-admin main h2, body.tz-admin main h3 { color: #f5efe0; }
-body.tz-admin main > h1.text-2xl, body.tz-admin main h1.text-2xl { font-size: 2rem; }
+html:not([data-theme="light"]) body.tz-admin table thead, html:not([data-theme="light"]) body.tz-admin table thead.bg-gray-50 { background: linear-gradient(180deg, rgba(201,162,77,.14), rgba(201,162,77,.05)); }
+html:not([data-theme="light"]) body.tz-admin table thead th { color: #e6cb83; }
+html:not([data-theme="light"]) body.tz-admin table tbody tr:hover { background-color: rgba(201,162,77,.07); }
+html:not([data-theme="light"]) body.tz-admin table td, html:not([data-theme="light"]) body.tz-admin table th { border-color: rgba(255,255,255,.06); }
+html:not([data-theme="light"]) body.tz-admin code { background: rgba(255,255,255,.08); color: #ecdba6; padding: .1rem .4rem; border-radius: 6px; }
+html:not([data-theme="light"]) body.tz-admin hr { border-color: rgba(255,255,255,.08); }
+html:not([data-theme="light"]) body.tz-admin a:not([class]) { color: #e6cb83; }
+html:not([data-theme="light"]) body.tz-admin ::-webkit-scrollbar-track { background: rgba(255,255,255,.03); }
+html:not([data-theme="light"]) body.tz-admin main h1 { color: #f8f2e4; } html:not([data-theme="light"]) body.tz-admin main h2, html:not([data-theme="light"]) body.tz-admin main h3 { color: #f5efe0; }
+html:not([data-theme="light"]) body.tz-admin main > h1.text-2xl, html:not([data-theme="light"]) body.tz-admin main h1.text-2xl { font-size: 2rem; }
 
 /* ==========================================================================
    8. Beranda — hero & seksi
@@ -1028,94 +1028,94 @@ html.tz-theme-anim *, html.tz-theme-anim *::before, html.tz-theme-anim *::after 
 @keyframes tz-bump { 0% { transform: scale(1); } 35% { transform: scale(1.45); } 100% { transform: scale(1); } }
 
 /* >>> DARK-GEN START: dihasilkan otomatis dari class yang dipakai proyek (latar terang, teks gelap, border terang -> versi gelap) */
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-amber-600, body.tz-admin .text-amber-600{color:#fcd34d}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-amber-700, body.tz-admin .text-amber-700{color:#fcd34d}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-amber-800, body.tz-admin .text-amber-800{color:#fcd34d}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-blue-600, body.tz-admin .text-blue-600{color:#93c5fd}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-blue-700, body.tz-admin .text-blue-700{color:#93c5fd}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-cyan-600, body.tz-admin .text-cyan-600{color:#e6cb83}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-cyan-700, body.tz-admin .text-cyan-700{color:#e6cb83}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-cyan-800, body.tz-admin .text-cyan-800{color:#e6cb83}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-emerald-600, body.tz-admin .text-emerald-600{color:#6ee7b7}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-emerald-700, body.tz-admin .text-emerald-700{color:#6ee7b7}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-emerald-800, body.tz-admin .text-emerald-800{color:#6ee7b7}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-400, body.tz-admin .text-gray-400{color:#928b77}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-500, body.tz-admin .text-gray-500{color:#a8a18d}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-600, body.tz-admin .text-gray-600{color:#c2bba8}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-700, body.tz-admin .text-gray-700{color:#e2dccb}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-800, body.tz-admin .text-gray-800{color:#f5efe0}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-indigo-700, body.tz-admin .text-indigo-700{color:#a5b4fc}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-navy-700, body.tz-admin .text-navy-700{color:#d6cfbc}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-navy-900, body.tz-admin .text-navy-900{color:#f5efe0}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-orange-600, body.tz-admin .text-orange-600{color:#fdba74}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-orange-700, body.tz-admin .text-orange-700{color:#fdba74}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-orange-800, body.tz-admin .text-orange-800{color:#fdba74}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-purple-700, body.tz-admin .text-purple-700{color:#d8b4fe}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-red-600, body.tz-admin .text-red-600{color:#fca5a5}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-red-700, body.tz-admin .text-red-700{color:#fca5a5}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-amber-200, body.tz-admin .border-amber-200{border-color:rgba(245,158,11,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-blue-100, body.tz-admin .border-blue-100{border-color:rgba(59,130,246,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-cyan-200, body.tz-admin .border-cyan-200{border-color:rgba(201,162,77,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-100, body.tz-admin .border-gray-100{border-color:rgba(255,255,255,0.07)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-200, body.tz-admin .border-gray-200{border-color:rgba(255,255,255,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-300, body.tz-admin .border-gray-300{border-color:rgba(255,255,255,0.17)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-50, body.tz-admin .border-gray-50{border-color:rgba(255,255,255,0.07)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-orange-200, body.tz-admin .border-orange-200{border-color:rgba(249,115,22,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-red-100, body.tz-admin .border-red-100{border-color:rgba(239,68,68,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-red-200, body.tz-admin .border-red-200{border-color:rgba(239,68,68,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .divide-gray-100 > :not([hidden]) ~ :not([hidden]), body.tz-admin .divide-gray-100 > :not([hidden]) ~ :not([hidden]){border-color:rgba(255,255,255,0.07)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .divide-gray-50 > :not([hidden]) ~ :not([hidden]), body.tz-admin .divide-gray-50 > :not([hidden]) ~ :not([hidden]){border-color:rgba(255,255,255,0.07)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-amber-50, body.tz-admin .bg-amber-50{background-color:rgba(245,158,11,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-blue-50, body.tz-admin .bg-blue-50{background-color:rgba(59,130,246,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-blue-50\/60, body.tz-admin .bg-blue-50\/60{background-color:rgba(59,130,246,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-100, body.tz-admin .bg-cyan-100{background-color:rgba(201,162,77,0.18)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50, body.tz-admin .bg-cyan-50{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50\/30, body.tz-admin .bg-cyan-50\/30{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50\/50, body.tz-admin .bg-cyan-50\/50{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50\/60, body.tz-admin .bg-cyan-50\/60{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-emerald-50, body.tz-admin .bg-emerald-50{background-color:rgba(16,185,129,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-gray-50\/60, body.tz-admin .bg-gray-50\/60{background-color:rgba(255,255,255,0.035)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-indigo-50, body.tz-admin .bg-indigo-50{background-color:rgba(99,102,241,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-orange-50, body.tz-admin .bg-orange-50{background-color:rgba(249,115,22,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-purple-50, body.tz-admin .bg-purple-50{background-color:rgba(168,85,247,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-red-50, body.tz-admin .bg-red-50{background-color:rgba(239,68,68,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-white\/80, body.tz-admin .bg-white\/80{background-color:rgba(255,255,255,.06)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-white\/90, body.tz-admin .bg-white\/90{background-color:rgba(255,255,255,.06)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-white\/95, body.tz-admin .bg-white\/95{background-color:rgba(255,255,255,.06)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .from-blue-50\/40, body.tz-admin .from-blue-50\/40{--tw-gradient-from:rgba(59,130,246,0.11) var(--tw-gradient-from-position);--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .from-cyan-50, body.tz-admin .from-cyan-50{--tw-gradient-from:rgba(201,162,77,0.11) var(--tw-gradient-from-position);--tw-gradient-to:rgba(201,162,77,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .from-gray-50, body.tz-admin .from-gray-50{--tw-gradient-from:rgba(255,255,255,0.035) var(--tw-gradient-from-position);--tw-gradient-to:rgba(255,255,255,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .to-blue-50, body.tz-admin .to-blue-50{--tw-gradient-to:rgba(59,130,246,0.11) var(--tw-gradient-to-position)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .to-cyan-50\/40, body.tz-admin .to-cyan-50\/40{--tw-gradient-to:rgba(201,162,77,0.11) var(--tw-gradient-to-position)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .to-gray-100, body.tz-admin .to-gray-100{--tw-gradient-to:rgba(255,255,255,0.07) var(--tw-gradient-to-position)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:text-cyan-600:hover, body.tz-admin .hover\:text-cyan-600:hover{color:#e6cb83}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:text-cyan-700:hover, body.tz-admin .hover\:text-cyan-700:hover{color:#e6cb83}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:text-navy-900:hover, body.tz-admin .hover\:text-navy-900:hover{color:#f5efe0}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-cyan-200:hover, body.tz-admin .hover\:border-cyan-200:hover{border-color:rgba(201,162,77,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-cyan-300:hover, body.tz-admin .hover\:border-cyan-300:hover{border-color:rgba(201,162,77,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-gray-300:hover, body.tz-admin .hover\:border-gray-300:hover{border-color:rgba(255,255,255,0.17)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-red-200:hover, body.tz-admin .hover\:border-red-200:hover{border-color:rgba(239,68,68,.32)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-100:hover, body.tz-admin .hover\:bg-cyan-100:hover{background-color:rgba(201,162,77,0.18)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-50:hover, body.tz-admin .hover\:bg-cyan-50:hover{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-50\/30:hover, body.tz-admin .hover\:bg-cyan-50\/30:hover{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-50\/40:hover, body.tz-admin .hover\:bg-cyan-50\/40:hover{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-gray-100:hover, body.tz-admin .hover\:bg-gray-100:hover{background-color:rgba(255,255,255,0.07)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-gray-50:hover, body.tz-admin .hover\:bg-gray-50:hover{background-color:rgba(255,255,255,0.035)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-orange-50:hover, body.tz-admin .hover\:bg-orange-50:hover{background-color:rgba(249,115,22,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-red-50:hover, body.tz-admin .hover\:bg-red-50:hover{background-color:rgba(239,68,68,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .file\:text-cyan-700::file-selector-button, body.tz-admin .file\:text-cyan-700::file-selector-button{color:#e6cb83}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .file\:bg-cyan-50::file-selector-button, body.tz-admin .file\:bg-cyan-50::file-selector-button{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:file\:bg-cyan-100:hover::file-selector-button, body.tz-admin .hover\:file\:bg-cyan-100:hover::file-selector-button{background-color:rgba(201,162,77,0.18)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .group:hover .group-hover\:text-cyan-600, body.tz-admin .group:hover .group-hover\:text-cyan-600{color:#e6cb83}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .group:hover .group-hover\:text-navy-900, body.tz-admin .group:hover .group-hover\:text-navy-900{color:#f5efe0}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .group:hover .group-hover\:bg-cyan-50, body.tz-admin .group:hover .group-hover\:bg-cyan-50{background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .has-\[\:checked\]\:bg-cyan-50\/50:has(:checked), body.tz-admin .has-\[\:checked\]\:bg-cyan-50\/50:has(:checked){background-color:rgba(201,162,77,0.11)}
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .has-\[\:checked\]\:bg-cyan-50\/60:has(:checked), body.tz-admin .has-\[\:checked\]\:bg-cyan-50\/60:has(:checked){background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-amber-600, html:not([data-theme="light"]) body.tz-admin .text-amber-600{color:#fcd34d}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-amber-700, html:not([data-theme="light"]) body.tz-admin .text-amber-700{color:#fcd34d}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-amber-800, html:not([data-theme="light"]) body.tz-admin .text-amber-800{color:#fcd34d}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-blue-600, html:not([data-theme="light"]) body.tz-admin .text-blue-600{color:#93c5fd}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-blue-700, html:not([data-theme="light"]) body.tz-admin .text-blue-700{color:#93c5fd}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-cyan-600, html:not([data-theme="light"]) body.tz-admin .text-cyan-600{color:#e6cb83}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-cyan-700, html:not([data-theme="light"]) body.tz-admin .text-cyan-700{color:#e6cb83}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-cyan-800, html:not([data-theme="light"]) body.tz-admin .text-cyan-800{color:#e6cb83}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-emerald-600, html:not([data-theme="light"]) body.tz-admin .text-emerald-600{color:#6ee7b7}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-emerald-700, html:not([data-theme="light"]) body.tz-admin .text-emerald-700{color:#6ee7b7}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-emerald-800, html:not([data-theme="light"]) body.tz-admin .text-emerald-800{color:#6ee7b7}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-400, html:not([data-theme="light"]) body.tz-admin .text-gray-400{color:#928b77}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-500, html:not([data-theme="light"]) body.tz-admin .text-gray-500{color:#a8a18d}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-600, html:not([data-theme="light"]) body.tz-admin .text-gray-600{color:#c2bba8}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-700, html:not([data-theme="light"]) body.tz-admin .text-gray-700{color:#e2dccb}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-gray-800, html:not([data-theme="light"]) body.tz-admin .text-gray-800{color:#f5efe0}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-indigo-700, html:not([data-theme="light"]) body.tz-admin .text-indigo-700{color:#a5b4fc}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-navy-700, html:not([data-theme="light"]) body.tz-admin .text-navy-700{color:#d6cfbc}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-navy-900, html:not([data-theme="light"]) body.tz-admin .text-navy-900{color:#f5efe0}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-orange-600, html:not([data-theme="light"]) body.tz-admin .text-orange-600{color:#fdba74}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-orange-700, html:not([data-theme="light"]) body.tz-admin .text-orange-700{color:#fdba74}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-orange-800, html:not([data-theme="light"]) body.tz-admin .text-orange-800{color:#fdba74}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-purple-700, html:not([data-theme="light"]) body.tz-admin .text-purple-700{color:#d8b4fe}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-red-600, html:not([data-theme="light"]) body.tz-admin .text-red-600{color:#fca5a5}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .text-red-700, html:not([data-theme="light"]) body.tz-admin .text-red-700{color:#fca5a5}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-amber-200, html:not([data-theme="light"]) body.tz-admin .border-amber-200{border-color:rgba(245,158,11,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-blue-100, html:not([data-theme="light"]) body.tz-admin .border-blue-100{border-color:rgba(59,130,246,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-cyan-200, html:not([data-theme="light"]) body.tz-admin .border-cyan-200{border-color:rgba(201,162,77,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-100, html:not([data-theme="light"]) body.tz-admin .border-gray-100{border-color:rgba(255,255,255,0.07)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-200, html:not([data-theme="light"]) body.tz-admin .border-gray-200{border-color:rgba(255,255,255,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-300, html:not([data-theme="light"]) body.tz-admin .border-gray-300{border-color:rgba(255,255,255,0.17)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-gray-50, html:not([data-theme="light"]) body.tz-admin .border-gray-50{border-color:rgba(255,255,255,0.07)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-orange-200, html:not([data-theme="light"]) body.tz-admin .border-orange-200{border-color:rgba(249,115,22,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-red-100, html:not([data-theme="light"]) body.tz-admin .border-red-100{border-color:rgba(239,68,68,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .border-red-200, html:not([data-theme="light"]) body.tz-admin .border-red-200{border-color:rgba(239,68,68,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .divide-gray-100 > :not([hidden]) ~ :not([hidden]), html:not([data-theme="light"]) body.tz-admin .divide-gray-100 > :not([hidden]) ~ :not([hidden]){border-color:rgba(255,255,255,0.07)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .divide-gray-50 > :not([hidden]) ~ :not([hidden]), html:not([data-theme="light"]) body.tz-admin .divide-gray-50 > :not([hidden]) ~ :not([hidden]){border-color:rgba(255,255,255,0.07)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-amber-50, html:not([data-theme="light"]) body.tz-admin .bg-amber-50{background-color:rgba(245,158,11,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-blue-50, html:not([data-theme="light"]) body.tz-admin .bg-blue-50{background-color:rgba(59,130,246,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-blue-50\/60, html:not([data-theme="light"]) body.tz-admin .bg-blue-50\/60{background-color:rgba(59,130,246,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-100, html:not([data-theme="light"]) body.tz-admin .bg-cyan-100{background-color:rgba(201,162,77,0.18)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50, html:not([data-theme="light"]) body.tz-admin .bg-cyan-50{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50\/30, html:not([data-theme="light"]) body.tz-admin .bg-cyan-50\/30{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50\/50, html:not([data-theme="light"]) body.tz-admin .bg-cyan-50\/50{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-cyan-50\/60, html:not([data-theme="light"]) body.tz-admin .bg-cyan-50\/60{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-emerald-50, html:not([data-theme="light"]) body.tz-admin .bg-emerald-50{background-color:rgba(16,185,129,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-gray-50\/60, html:not([data-theme="light"]) body.tz-admin .bg-gray-50\/60{background-color:rgba(255,255,255,0.035)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-indigo-50, html:not([data-theme="light"]) body.tz-admin .bg-indigo-50{background-color:rgba(99,102,241,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-orange-50, html:not([data-theme="light"]) body.tz-admin .bg-orange-50{background-color:rgba(249,115,22,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-purple-50, html:not([data-theme="light"]) body.tz-admin .bg-purple-50{background-color:rgba(168,85,247,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-red-50, html:not([data-theme="light"]) body.tz-admin .bg-red-50{background-color:rgba(239,68,68,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-white\/80, html:not([data-theme="light"]) body.tz-admin .bg-white\/80{background-color:rgba(255,255,255,.06)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-white\/90, html:not([data-theme="light"]) body.tz-admin .bg-white\/90{background-color:rgba(255,255,255,.06)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .bg-white\/95, html:not([data-theme="light"]) body.tz-admin .bg-white\/95{background-color:rgba(255,255,255,.06)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .from-blue-50\/40, html:not([data-theme="light"]) body.tz-admin .from-blue-50\/40{--tw-gradient-from:rgba(59,130,246,0.11) var(--tw-gradient-from-position);--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .from-cyan-50, html:not([data-theme="light"]) body.tz-admin .from-cyan-50{--tw-gradient-from:rgba(201,162,77,0.11) var(--tw-gradient-from-position);--tw-gradient-to:rgba(201,162,77,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .from-gray-50, html:not([data-theme="light"]) body.tz-admin .from-gray-50{--tw-gradient-from:rgba(255,255,255,0.035) var(--tw-gradient-from-position);--tw-gradient-to:rgba(255,255,255,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .to-blue-50, html:not([data-theme="light"]) body.tz-admin .to-blue-50{--tw-gradient-to:rgba(59,130,246,0.11) var(--tw-gradient-to-position)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .to-cyan-50\/40, html:not([data-theme="light"]) body.tz-admin .to-cyan-50\/40{--tw-gradient-to:rgba(201,162,77,0.11) var(--tw-gradient-to-position)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .to-gray-100, html:not([data-theme="light"]) body.tz-admin .to-gray-100{--tw-gradient-to:rgba(255,255,255,0.07) var(--tw-gradient-to-position)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:text-cyan-600:hover, html:not([data-theme="light"]) body.tz-admin .hover\:text-cyan-600:hover{color:#e6cb83}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:text-cyan-700:hover, html:not([data-theme="light"]) body.tz-admin .hover\:text-cyan-700:hover{color:#e6cb83}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:text-navy-900:hover, html:not([data-theme="light"]) body.tz-admin .hover\:text-navy-900:hover{color:#f5efe0}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-cyan-200:hover, html:not([data-theme="light"]) body.tz-admin .hover\:border-cyan-200:hover{border-color:rgba(201,162,77,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-cyan-300:hover, html:not([data-theme="light"]) body.tz-admin .hover\:border-cyan-300:hover{border-color:rgba(201,162,77,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-gray-300:hover, html:not([data-theme="light"]) body.tz-admin .hover\:border-gray-300:hover{border-color:rgba(255,255,255,0.17)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:border-red-200:hover, html:not([data-theme="light"]) body.tz-admin .hover\:border-red-200:hover{border-color:rgba(239,68,68,.32)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-100:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-cyan-100:hover{background-color:rgba(201,162,77,0.18)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-50:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-cyan-50:hover{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-50\/30:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-cyan-50\/30:hover{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-cyan-50\/40:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-cyan-50\/40:hover{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-gray-100:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-gray-100:hover{background-color:rgba(255,255,255,0.07)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-gray-50:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-gray-50:hover{background-color:rgba(255,255,255,0.035)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-orange-50:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-orange-50:hover{background-color:rgba(249,115,22,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:bg-red-50:hover, html:not([data-theme="light"]) body.tz-admin .hover\:bg-red-50:hover{background-color:rgba(239,68,68,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .file\:text-cyan-700::file-selector-button, html:not([data-theme="light"]) body.tz-admin .file\:text-cyan-700::file-selector-button{color:#e6cb83}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .file\:bg-cyan-50::file-selector-button, html:not([data-theme="light"]) body.tz-admin .file\:bg-cyan-50::file-selector-button{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .hover\:file\:bg-cyan-100:hover::file-selector-button, html:not([data-theme="light"]) body.tz-admin .hover\:file\:bg-cyan-100:hover::file-selector-button{background-color:rgba(201,162,77,0.18)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .group:hover .group-hover\:text-cyan-600, html:not([data-theme="light"]) body.tz-admin .group:hover .group-hover\:text-cyan-600{color:#e6cb83}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .group:hover .group-hover\:text-navy-900, html:not([data-theme="light"]) body.tz-admin .group:hover .group-hover\:text-navy-900{color:#f5efe0}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .group:hover .group-hover\:bg-cyan-50, html:not([data-theme="light"]) body.tz-admin .group:hover .group-hover\:bg-cyan-50{background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .has-\[\:checked\]\:bg-cyan-50\/50:has(:checked), html:not([data-theme="light"]) body.tz-admin .has-\[\:checked\]\:bg-cyan-50\/50:has(:checked){background-color:rgba(201,162,77,0.11)}
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) .has-\[\:checked\]\:bg-cyan-50\/60:has(:checked), html:not([data-theme="light"]) body.tz-admin .has-\[\:checked\]\:bg-cyan-50\/60:has(:checked){background-color:rgba(201,162,77,0.11)}
 
 /* logo bank/e-wallet selalu di atas kotak PUTIH (agar logo transparan tetap jelas di mode gelap) */
-html[data-theme="dark"] body.tz-store:not(.tz-auth-page) img.bg-white, body.tz-admin img.bg-white { background: #fff; }
+html[data-theme="dark"] body.tz-store:not(.tz-auth-page) img.bg-white, html:not([data-theme="light"]) body.tz-admin img.bg-white { background: #fff; }
 /* jarak "ring offset" mengikuti latar gelap, bukan putih */
-:where(html[data-theme="dark"] body.tz-store:not(.tz-auth-page)) *, :where(body.tz-admin) * { --tw-ring-offset-color: #0b0b10; }
+:where(html[data-theme="dark"] body.tz-store:not(.tz-auth-page)) *, :where(html:not([data-theme="light"]) body.tz-admin) * { --tw-ring-offset-color: #0b0b10; }
 /* kontrol bawaan browser ikut gelap */
 html[data-theme="dark"] body.tz-store:not(.tz-auth-page) input[type="radio"], html[data-theme="dark"] body.tz-store:not(.tz-auth-page) input[type="checkbox"] { color-scheme: dark; }
 /* >>> DARK-GEN END */
@@ -1177,19 +1177,31 @@ body.tz-body::before, body.tz-admin::before, body.tz-admin::after { display: non
 }
 @media (max-width: 480px) {
   .tz-hide-xs { display: none !important; }
-  .tz-drawer__theme { display: flex; }
 }
-@media (max-width: 380px) {
-  .tz-burger { width: 42px; padding: 0; }
+/* Layar kecil: tombol navbar diperkecil agar menu, logo, cari, tema, keranjang, notifikasi muat satu baris */
+@media (max-width: 480px) {
+  .tz-nav__brand { gap: .5rem; }
+  .tz-nav__actions { gap: .4rem; }
+  .tz-nav__actions .tz-icon-btn, .tz-nav__actions .tz-signin { width: 38px; height: 38px; border-radius: 12px; }
+  .tz-nav__actions .tz-signin { padding: 0; }
+  .tz-logo__mark { width: 36px; height: 36px; border-radius: 12px; }
+  .tz-burger { height: 38px; padding: 0 .7rem 0 .65rem; border-radius: 12px; }
+  .tz-burger__label { font-size: .68rem; }
+}
+@media (max-width: 420px) {
+  .tz-burger { width: 38px; padding: 0; }
   .tz-burger__label { display: none; }
 }
 
 /* ==========================================================================
    Katalog produk: Urutkan + kolom cari di bagian hero
    ========================================================================== */
-.tz-ptools { display: flex; flex-direction: column; gap: .7rem; width: 100%; }
+/* Hero katalog: berada di atas filter/daftar produk, dan dropdown pencarian boleh keluar dari hero */
+.tz-phero { position: relative; z-index: 20; }
+.tz-phero__decor { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.tz-ptools { position: relative; z-index: 30; display: flex; flex-direction: column; gap: .7rem; width: 100%; }
 @media (min-width: 768px) { .tz-ptools { flex-direction: row-reverse; align-items: center; width: auto; } .tz-psearch { width: 300px; } }
-.tz-psearch { position: relative; display: flex; align-items: center; height: 46px; border-radius: 9999px; background: rgba(255,255,255,.06); border: 1px solid rgba(201,162,77,.28); transition: border-color .3s, background .3s, box-shadow .3s; }
+.tz-psearch { position: relative; z-index: 30; display: flex; align-items: center; height: 46px; border-radius: 9999px; background: rgba(255,255,255,.06); border: 1px solid rgba(201,162,77,.28); transition: border-color .3s, background .3s, box-shadow .3s; }
 .tz-psearch:focus-within { border-color: var(--gold-400); background: rgba(201,162,77,.08); box-shadow: 0 0 0 4px rgba(201,162,77,.12); }
 .tz-psearch > i.fa-magnifying-glass { flex: none; margin-left: 1rem; font-size: .8rem; color: #8f8878; pointer-events: none; }
 .tz-psearch input[type="text"] { flex: 1; min-width: 0; height: 100%; padding: 0 .6rem; border: 0 !important; border-radius: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; color: #f5efe0 !important; font-size: .85rem; }
@@ -1199,3 +1211,103 @@ body.tz-body::before, body.tz-admin::before, body.tz-admin::after { display: non
 .tz-psearch__btn { flex: none; height: 36px; margin-right: 5px; padding: 0 1.15rem; border-radius: 9999px; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-900); background: var(--gold-grad); transition: filter .3s, transform .3s; }
 .tz-psearch__btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
 .tz-psearch .tz-suggest { left: 0; right: 0; width: auto; max-height: 55vh; }
+
+
+/* ==========================================================================
+   10. Admin — tombol tema, topbar responsif, mode terang, tabel yang bisa digeser
+   ========================================================================== */
+
+/* ikon tombol tema admin: bawaan gelap -> tampilkan matahari (klik = terang); mode terang -> bulan */
+html.tz-theme-admin .tz-theme-ico-moon { display: none; }
+html.tz-theme-admin .tz-theme-ico-sun { display: inline-block; }
+html.tz-theme-admin[data-theme="light"] .tz-theme-ico-moon { display: inline-block; }
+html.tz-theme-admin[data-theme="light"] .tz-theme-ico-sun { display: none; }
+.tz-admin-top .tz-admin-theme { width: 40px; height: 40px; }
+
+/* topbar admin di layar kecil: tulisan "TechZone Admin" dihapus, tombol & logo A dikecilkan agar muat bersebelahan */
+@media (max-width: 767px) {
+  .tz-crumb small { display: none; }
+  .tz-crumb b { margin-top: 0; font-size: 1.02rem; }
+}
+@media (max-width: 640px) {
+  .tz-admin-top { height: 64px; padding: 0 .75rem; gap: .5rem; }
+  .tz-admin-top__left { gap: .6rem; flex: 1 1 auto; }
+  .tz-admin-top__left .tz-burger { width: 38px; height: 38px; border-radius: 12px; flex: none; }
+  .tz-admin-top__right { gap: .4rem; }
+  .tz-admin-top .tz-icon-btn, .tz-admin-top .tz-admin-theme, .tz-admin-top .tz-logout { width: 36px; height: 36px; border-radius: 11px; font-size: .85rem; }
+  .tz-admin-top .tz-user { padding: .15rem; gap: 0; }
+  .tz-admin-top .tz-user .tz-avatar { width: 28px; height: 28px; font-size: .78rem; }
+  .tz-admin-top .tz-badge { top: -6px; right: -6px; min-width: 17px; height: 17px; font-size: .55rem; }
+  .tz-admin-flash { margin: .8rem .75rem 0; }
+}
+
+/* tabel admin: selalu bisa digeser ke samping di layar kecil */
+.tz-tablewrap { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x pan-y; }
+.tz-tablewrap > table { min-width: 640px; }
+.tz-tablewrap > table th { white-space: nowrap; }
+
+/* ---------- Admin: MODE TERANG (tombol matahari/bulan di topbar) ----------
+   Override gelap pada class Tailwind sudah dimatikan lewat html:not([data-theme="light"]),
+   jadi di sini cukup mengatur komponen khusus admin yang warnanya ditulis gelap. Sidebar & banner dashboard tetap gelap. */
+html.tz-theme-admin[data-theme="light"] { color-scheme: light; background: #f6f2e8; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) { color: #2a2418; background-color: #f6f2e8;
+  background-image: radial-gradient(900px 520px at 100% -10%, rgba(201,162,77,.16), transparent 60%), radial-gradient(800px 520px at -10% 105%, rgba(201,162,77,.08), transparent 60%); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .min-h-screen.bg-gray-50 { background: transparent; }
+
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-top { background: rgba(255,253,248,.97); border-bottom-color: rgba(156,118,37,.22); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-top .tz-burger,
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-top .tz-icon-btn { color: #5a4a22; background: #fff; border-color: rgba(156,118,37,.3); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-top .tz-burger:hover,
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-top .tz-icon-btn:hover { color: #3a2f12; background: #fbf3dc; border-color: var(--gold-500); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-top .tz-badge { border-color: #fff; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-crumb small { color: var(--gold-600); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-crumb b { color: #2a2418; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-clock { background: #fff; border-color: rgba(156,118,37,.25); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-clock i { color: var(--gold-600) !important; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-clock__time { color: #7a5a1a; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-clock__date { color: #8a8068; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-pill-link { color: #5a4a22; background: #fff; border-color: rgba(156,118,37,.3); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-pill-link:hover { color: #3a2f12; background: #fbf3dc; border-color: var(--gold-500); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-user { background: #fff; border-color: rgba(156,118,37,.28); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-user span.n { color: #2a2418; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-logout { color: #c2362d; background: #fff; border-color: rgba(194,54,45,.3); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-logout:hover { color: #fff; background: #d9453b; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-flash--success { color: #065f46; background: #ecfdf5; border-color: #a7f3d0; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-flash--error { color: #991b1b; background: #fef2f2; border-color: #fecaca; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-admin-flash--info { color: #5a4a22; background: #fbf3dc; border-color: rgba(156,118,37,.3); }
+
+/* dashboard */
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi,
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-panel { background: #fff; border-color: rgba(156,118,37,.16); box-shadow: 0 18px 36px -28px rgba(94,66,10,.35); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi__ico { color: var(--kt, #8a6a1a); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi--green  { --kt: #047857; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi--blue   { --kt: #1d4ed8; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi--violet { --kt: #6d28d9; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi--orange { --kt: #c2410c; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi--amber  { --kt: #b45309; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi--red    { --kt: #b91c1c; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi--teal   { --kt: #0f766e; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi__label { color: #8a8068; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-kpi__val { color: #2a2418; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-panel__head h2 { color: #2a2418; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-panel__head p { color: #8a8068; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-panel__head a { color: var(--gold-700); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-bars { border-bottom-color: rgba(42,36,24,.14); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-bars::before { background: repeating-linear-gradient(180deg, transparent 0 54px, rgba(42,36,24,.06) 54px 55px); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-bar__fill.is-zero { background: rgba(42,36,24,.08); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-bar-labels span { color: #8a8068; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-donut::before { background: #fff; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-donut__center b { color: #2a2418; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-donut__center small { color: #8a8068; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-legend li { color: #5c5440; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-legend b { color: #2a2418; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-order { background: #fffdf9; border-color: rgba(156,118,37,.14); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-order:hover { background: #fbf3dc; border-color: rgba(156,118,37,.35); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-order__no { color: #2a2418; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-order__who { color: #8a8068; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-order__total { color: var(--gold-700); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-empty { color: #8a8068; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tabs { background: #fff; border-color: rgba(156,118,37,.25); }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tab { color: #6b6350; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tab:hover { color: #2a2418; background: #fbf3dc; }
+html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tab.is-active { color: var(--ink-900); background: var(--gold-grad); }

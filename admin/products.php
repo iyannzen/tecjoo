@@ -112,7 +112,7 @@ require __DIR__ . '/../includes/header.php';
       </form>
 
       <div class="bg-white border border-gray-100 rounded-xl overflow-hidden">
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto tz-tablewrap">
         <table class="w-full text-sm">
           <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
             <tr>

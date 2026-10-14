@@ -5,6 +5,7 @@
  * Semua harga & stok divalidasi ulang dari database (tidak percaya input frontend).
  */
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/cart_helpers.php';
 
@@ -13,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 verifyCsrfToken($_POST['csrf_token'] ?? null);
+
+// Pengunjung (belum login) hanya boleh melihat-lihat: semua aksi keranjang wajib login.
+requireUserLoginForAction('Silakan masuk terlebih dahulu untuk menambahkan produk ke keranjang.');
 
 $pdo    = getDbConnection();
 $cartId = getOrCreateCartId($pdo);

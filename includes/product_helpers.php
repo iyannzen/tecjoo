@@ -3,6 +3,7 @@
  * TechZone - Helper Produk (dipakai di homepage, katalog, kategori, hasil pencarian)
  */
 require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/csrf.php';
 
 /** Menghasilkan markup HTML rating bintang (Font Awesome) dari nilai rating 0-5. */
@@ -142,7 +143,7 @@ function renderProductCard(array $product): void
             <input type="hidden" name="action" value="add">
             <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
             <input type="hidden" name="quantity" value="1">
-            <button type="submit" title="Tambah ke keranjang"
+            <button type="submit" title="<?= isUserLoggedIn() ? 'Tambah ke keranjang' : 'Masuk untuk menambah ke keranjang' ?>"
                     class="ripple-wrap w-8 h-8 rounded-full bg-navy-900 hover:bg-cyan-500 text-white hover:text-navy-900 flex items-center justify-center text-xs shrink-0 transition-all duration-300 hover:scale-110 hover:rotate-6 shadow-sm">
               <i class="fa-solid fa-cart-plus"></i>
             </button>

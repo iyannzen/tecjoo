@@ -69,7 +69,7 @@ require __DIR__ . '/../includes/header.php';
       </form>
 
       <div class="bg-white border border-gray-100 rounded-xl overflow-hidden">
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto tz-tablewrap">
         <table class="w-full text-sm">
           <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
             <tr><th class="text-left px-4 py-3">ID Transaksi</th><th class="text-left px-4 py-3">Order</th><th class="text-left px-4 py-3">User</th><th class="text-left px-4 py-3">Tanggal</th><th class="text-right px-4 py-3">Jumlah</th><th class="text-left px-4 py-3">Metode</th><th class="text-left px-4 py-3">Status</th></tr>

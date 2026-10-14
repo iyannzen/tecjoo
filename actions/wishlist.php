@@ -12,11 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 verifyCsrfToken($_POST['csrf_token'] ?? null);
 
-if (!isUserLoggedIn()) {
-    $_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'] ?? 'index.php';
-    setFlashMessage('error', 'Silakan masuk terlebih dahulu untuk menggunakan wishlist.');
-    redirectTo('login.php');
-}
+requireUserLoginForAction('Silakan masuk terlebih dahulu untuk menggunakan wishlist.');
 
 $pdo       = getDbConnection();
 $userId    = (int) $_SESSION['user_id'];

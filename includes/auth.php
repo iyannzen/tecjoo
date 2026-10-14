@@ -23,13 +23,68 @@ function isAdminLoggedIn(): bool
     return !empty($_SESSION['user_id']) && ($_SESSION['role'] ?? '') === 'admin';
 }
 
+/**
+ * Ubah sebuah URL (mis. HTTP_REFERER) menjadi path RELATIF terhadap root situs
+ * (contoh: "product-detail.php?slug=esp32"), supaya aman dipakai redirectTo().
+ * URL dari domain lain atau yang tidak valid dikembalikan sebagai $fallback.
+ */
+function tzRelativeReturnPath(string $url, string $fallback = 'index.php'): string
+{
+    if ($url === '') {
+        return $fallback;
+    }
+    $p = parse_url($url);
+    if ($p === false) {
+        return $fallback;
+    }
+    $host = strtolower($_SERVER['HTTP_HOST'] ?? '');
+    if (!empty($p['host'])) {
+        $urlHost = strtolower($p['host'] . (isset($p['port']) ? ':' . $p['port'] : ''));
+        if ($urlHost !== $host && strtolower($p['host']) !== preg_replace('/:\d+$/', '', $host)) {
+            return $fallback;
+        }
+    }
+    $path     = $p['path'] ?? '/';
+    $basePath = (string) (parse_url(techzoneBaseUrl(), PHP_URL_PATH) ?? '');
+    if ($basePath !== '' && $basePath !== '/' && strpos($path, $basePath) === 0) {
+        $path = substr($path, strlen($basePath));
+    }
+    $path = ltrim($path, '/');
+    if ($path === '' || strpos($path, '..') !== false) {
+        return $fallback;
+    }
+    if (!empty($p['query'])) {
+        $path .= '?' . $p['query'];
+    }
+    return $path;
+}
+
 /** Wajibkan user login. Jika belum, redirect ke halaman login. */
 function requireUserLogin(): void
 {
     if (!isUserLoggedIn()) {
+        // Untuk halaman yang dibuka langsung (GET), ingat tujuannya agar setelah login kembali ke sana.
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET' && !empty($_SERVER['REQUEST_URI'])) {
+            $_SESSION['redirect_after_login'] = tzRelativeReturnPath($_SERVER['REQUEST_URI'], 'index.php');
+        }
         setFlashMessage('error', 'Silakan masuk terlebih dahulu untuk melanjutkan.');
         redirectTo('login.php');
     }
+}
+
+/**
+ * Wajibkan login untuk sebuah AKSI (tambah keranjang, wishlist, dsb).
+ * Pengunjung yang belum login hanya boleh melihat-lihat; jika mencoba beraksi, ia diarahkan
+ * ke halaman login dan setelah masuk dikembalikan ke halaman tempat ia tadi berada.
+ */
+function requireUserLoginForAction(string $message): void
+{
+    if (isUserLoggedIn()) {
+        return;
+    }
+    $_SESSION['redirect_after_login'] = tzRelativeReturnPath($_SERVER['HTTP_REFERER'] ?? '', 'index.php');
+    setFlashMessage('error', $message);
+    redirectTo('login.php');
 }
 
 /** Ambil data user yang sedang login dari database (data terbaru, bukan dari session). */
