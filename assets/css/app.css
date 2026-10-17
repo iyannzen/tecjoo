@@ -1235,6 +1235,7 @@ html.tz-theme-admin[data-theme="light"] .tz-theme-ico-sun { display: none; }
   .tz-admin-top__left .tz-burger { width: 38px; height: 38px; border-radius: 12px; flex: none; }
   .tz-admin-top__right { gap: .4rem; }
   .tz-admin-top .tz-icon-btn, .tz-admin-top .tz-admin-theme, .tz-admin-top .tz-logout { width: 36px; height: 36px; border-radius: 11px; font-size: .85rem; }
+  .tz-admin-top .tz-pill-link { display: none; } /* "Lihat Toko" disembunyikan di HP supaya judul halaman tidak terpotong */
   .tz-admin-top .tz-user { padding: .15rem; gap: 0; }
   .tz-admin-top .tz-user .tz-avatar { width: 28px; height: 28px; font-size: .78rem; }
   .tz-admin-top .tz-badge { top: -6px; right: -6px; min-width: 17px; height: 17px; font-size: .55rem; }
@@ -1311,3 +1312,141 @@ html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tabs { background:
 html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tab { color: #6b6350; }
 html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tab:hover { color: #2a2418; background: #fbf3dc; }
 html[data-theme="light"] body.tz-admin:not(.tz-auth-page) .tz-tab.is-active { color: var(--ink-900); background: var(--gold-grad); }
+
+
+/* ==========================================================================
+   11. Chat produk (user <-> admin) + bar aksi mobile di halaman produk
+   ========================================================================== */
+body.tz-body {
+  --ch-panel: #fffdf9; --ch-panel2: #f7f2e6; --ch-border: rgba(156,118,37,.24); --ch-text: #2a2418; --ch-muted: #8a8068;
+  --ch-in: #f1ebdc; --ch-in-text: #2a2418; --ch-input: #ffffff; --ch-shadow: 0 30px 60px -36px rgba(94,66,10,.45);
+}
+html[data-theme="dark"] body.tz-store, html.tz-theme-admin:not([data-theme="light"]) body.tz-admin {
+  --ch-panel: #0e0e15; --ch-panel2: #15151d; --ch-border: rgba(201,162,77,.26); --ch-text: #f5efe0; --ch-muted: #8b8470;
+  --ch-in: rgba(255,255,255,.08); --ch-in-text: #ece6d6; --ch-input: rgba(255,255,255,.06); --ch-shadow: 0 30px 60px -36px rgba(0,0,0,.9);
+}
+
+.tz-chat { display: flex; flex-direction: column; height: min(760px, calc(100dvh - 150px)); min-height: 440px; overflow: hidden; border-radius: 22px;
+  color: var(--ch-text); background: var(--ch-panel); border: 1px solid var(--ch-border); box-shadow: var(--ch-shadow); }
+.tz-chat--admin { height: min(720px, calc(100dvh - 230px)); min-height: 420px; }
+.tz-chat__head { flex: none; display: flex; align-items: center; gap: .7rem; padding: .8rem 1rem; background: var(--ch-panel2); border-bottom: 1px solid var(--ch-border); }
+.tz-chat__back, .tz-chat__iconlink { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; color: var(--ch-text); transition: background .25s; }
+.tz-chat__back:hover, .tz-chat__iconlink:hover { background: rgba(201,162,77,.16); }
+.tz-chat__avatar { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; font-weight: 800; color: var(--ink-900); background: var(--gold-grad); }
+.tz-chat__who { flex: 1; min-width: 0; line-height: 1.25; }
+.tz-chat__who b { display: block; font-size: .95rem; color: var(--ch-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tz-chat__who small { display: block; font-size: .72rem; color: var(--ch-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.tz-chat__msgs { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1rem; display: flex; flex-direction: column; gap: .35rem; }
+.tz-chat__note { align-self: center; padding: 1rem; font-size: .8rem; color: var(--ch-muted); text-align: center; }
+.tz-chat__note--err { color: #d9453b; }
+.tz-chat__day { align-self: center; margin: .7rem 0 .4rem; padding: .2rem .75rem; border-radius: 9999px; font-size: .66rem; font-weight: 700; letter-spacing: .04em; color: var(--ch-muted); background: var(--ch-panel2); border: 1px solid var(--ch-border); }
+.tz-cm { display: flex; flex-direction: column; max-width: 82%; }
+.tz-cm--me { align-self: flex-end; align-items: flex-end; }
+.tz-cm--them, .tz-cm--bot { align-self: flex-start; align-items: flex-start; }
+.tz-cm__bubble { padding: .55rem .8rem .35rem; border-radius: 16px; font-size: .88rem; line-height: 1.45; overflow-wrap: anywhere; }
+.tz-cm--me .tz-cm__bubble { color: var(--ink-900); background: var(--gold-grad); border-bottom-right-radius: 5px; }
+.tz-cm--them .tz-cm__bubble, .tz-cm--bot .tz-cm__bubble { color: var(--ch-in-text); background: var(--ch-in); border-bottom-left-radius: 5px; }
+.tz-cm__text { white-space: pre-wrap; }
+.tz-cm__time { display: block; margin-top: .15rem; font-size: .62rem; text-align: right; opacity: .65; }
+.tz-cm__tag { margin: .2rem .35rem 0; font-size: .66rem; color: var(--ch-muted); }
+.tz-cmcard { display: flex; align-items: center; gap: .6rem; min-width: 210px; max-width: 100%; padding: .4rem; border-radius: 12px; color: inherit; }
+.tz-cm--me .tz-cmcard { background: rgba(255,255,255,.42); }
+.tz-cm--them .tz-cmcard { background: var(--ch-panel); }
+.tz-cmcard img { flex: none; width: 52px; height: 52px; border-radius: 10px; object-fit: cover; background: #fff; }
+.tz-cmcard__txt { min-width: 0; display: flex; flex-direction: column; gap: .15rem; }
+.tz-cmcard__txt b { font-size: .8rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tz-cmcard__txt em { font-style: normal; font-size: .8rem; font-weight: 800; }
+
+/* kartu produk di atas kolom ketik (sisi user) */
+.tz-chat__prod { flex: none; display: flex; align-items: center; gap: .7rem; margin: 0 .8rem .6rem; padding: .55rem; border-radius: 16px; background: var(--ch-panel2); border: 1px solid var(--ch-border); }
+.tz-chat__prod[hidden] { display: none; }
+.tz-chat__prodimg { flex: none; }
+.tz-chat__prod img, .tz-chat__aboutprod img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; background: #fff; display: block; }
+.tz-chat__prodtxt, .tz-chat__prod .tz-chat__prodtxt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .1rem; }
+.tz-chat__prodtxt b { font-size: .84rem; color: var(--ch-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tz-chat__prodtxt span { font-size: .8rem; font-weight: 800; color: var(--gold-600); white-space: nowrap; }
+.tz-chat__prodtxt span s { font-weight: 500; color: var(--ch-muted); margin-left: .3rem; white-space: nowrap; }
+.tz-chat__prodtxt small { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ch-muted); }
+html[data-theme="dark"] body.tz-store .tz-chat__prodtxt span, html.tz-theme-admin:not([data-theme="light"]) .tz-chat__prodtxt span { color: var(--gold-300); }
+.tz-chat__prodsend { flex: none; padding: .55rem 1.1rem; border-radius: 9999px; font-size: .8rem; font-weight: 800; color: var(--ink-900); background: var(--gold-grad); transition: filter .25s, transform .25s; }
+.tz-chat__prodsend:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.tz-chat__prodsend:disabled { opacity: .55; }
+.tz-chat__prod.is-sent .tz-chat__prodsend { background: transparent; color: var(--ch-muted); border: 1px solid var(--ch-border); }
+.tz-chat__prodx { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; color: var(--ch-muted); }
+.tz-chat__prodx:hover { background: rgba(201,162,77,.16); color: var(--ch-text); }
+
+/* info produk di atas ruang chat (sisi admin) */
+.tz-chat__aboutprod { flex: none; display: flex; align-items: center; gap: .7rem; padding: .6rem 1rem; color: var(--ch-text); background: var(--ch-panel2); border-bottom: 1px solid var(--ch-border); transition: background .25s; }
+.tz-chat__aboutprod:hover { background: rgba(201,162,77,.12); }
+.tz-chat__aboutprod > i { flex: none; font-size: .8rem; color: var(--ch-muted); }
+
+.tz-chat__form { flex: none; display: flex; align-items: flex-end; gap: .5rem; padding: .7rem .8rem; background: var(--ch-panel); border-top: 1px solid var(--ch-border); }
+.tz-chat__form textarea { flex: 1; min-width: 0; max-height: 120px; resize: none; padding: .65rem 1rem; border-radius: 20px; font-size: .9rem; line-height: 1.35; outline: none; color: var(--ch-text); background: var(--ch-input); border: 1px solid var(--ch-border); transition: border-color .25s, box-shadow .25s; }
+.tz-chat__form textarea:focus { border-color: var(--gold-400); box-shadow: 0 0 0 3px rgba(201,162,77,.15); }
+.tz-chat__send { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; color: var(--ink-900); background: var(--gold-grad); transition: filter .25s, transform .25s; }
+.tz-chat__send:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.tz-chat__send:disabled { opacity: .5; transform: none; }
+
+/* daftar percakapan */
+.tz-chatlist { display: flex; flex-direction: column; overflow-y: auto; }
+.tz-chatlist--page { border-radius: 18px; background: var(--ch-panel); border: 1px solid var(--ch-border); box-shadow: var(--ch-shadow); }
+.tz-chatlist__empty { padding: 2rem 1rem; text-align: center; font-size: .82rem; color: var(--ch-muted); }
+.tz-chatrow { display: flex; align-items: center; gap: .7rem; padding: .7rem .85rem; color: var(--ch-text); border-bottom: 1px solid var(--ch-border); transition: background .25s; }
+.tz-chatrow:last-child { border-bottom: 0; }
+.tz-chatrow:hover { background: var(--ch-panel2); }
+.tz-chatrow.is-active { background: rgba(201,162,77,.16); }
+.tz-chatrow img { flex: none; width: 44px; height: 44px; border-radius: 10px; object-fit: cover; background: #fff; }
+.tz-chatrow__txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .05rem; }
+.tz-chatrow__txt b { font-size: .86rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tz-chatrow__txt em { font-style: normal; font-size: .72rem; color: var(--gold-600); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html[data-theme="dark"] body.tz-store .tz-chatrow__txt em, html.tz-theme-admin:not([data-theme="light"]) .tz-chatrow__txt em { color: var(--gold-300); }
+.tz-chatrow__txt small { font-size: .76rem; color: var(--ch-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tz-chatrow.is-unread .tz-chatrow__txt small { color: var(--ch-text); font-weight: 700; }
+.tz-chatrow__meta { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; }
+.tz-chatrow__meta time { font-size: .66rem; color: var(--ch-muted); }
+.tz-chatrow__meta i { min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border-radius: 9999px; font-style: normal; font-size: .65rem; font-weight: 800; color: #fff; background: #e0483f; }
+
+/* admin: dua panel */
+.tz-chatsplit { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 1rem; align-items: start; }
+.tz-chatpane { display: flex; flex-direction: column; height: min(720px, calc(100dvh - 230px)); min-height: 420px; overflow: hidden; border-radius: 22px; background: var(--ch-panel); border: 1px solid var(--ch-border); box-shadow: var(--ch-shadow); }
+.tz-chatpane .tz-chatlist { flex: 1; min-height: 0; }
+.tz-chatpane__search { flex: none; display: flex; align-items: center; gap: .6rem; margin: .7rem; padding: 0 .9rem; border-radius: 9999px; background: var(--ch-input); border: 1px solid var(--ch-border); }
+.tz-chatpane__search i { font-size: .78rem; color: var(--ch-muted); }
+.tz-chatpane__search input { flex: 1; min-width: 0; height: 40px; border: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; color: var(--ch-text) !important; font-size: .85rem; }
+.tz-chatmain__empty { height: min(720px, calc(100dvh - 230px)); min-height: 420px; display: grid; place-content: center; justify-items: center; gap: .8rem; padding: 1rem; text-align: center; color: var(--ch-muted); border-radius: 22px; border: 1px dashed var(--ch-border); font-size: .85rem; }
+.tz-chatmain__empty i { font-size: 2rem; opacity: .5; }
+.tz-chat__back--list { display: none; }
+@media (max-width: 1023px) {
+  .tz-chatsplit { grid-template-columns: minmax(0, 1fr); }
+  .tz-chatsplit.has-thread .tz-chatpane { display: none; }
+  .tz-chatsplit:not(.has-thread) .tz-chatmain { display: none; }
+  .tz-chat__back--list { display: grid; }
+  .tz-chatpane { height: min(720px, calc(100dvh - 190px)); }
+}
+
+/* halaman chat user: terasa seperti aplikasi (footer & tombol ke atas disembunyikan) */
+body.tz-chatpage .tz-footer, body.tz-chatpage .tz-totop { display: none; }
+@media (max-width: 640px) {
+  .tz-chat { height: calc(100dvh - 118px); min-height: 380px; border-radius: 16px; }
+  .tz-chat--admin { height: calc(100dvh - 190px); }
+  .tz-cm { max-width: 90%; }
+  .tz-chat__form textarea { font-size: 16px; }
+}
+
+/* bar aksi bawah di halaman produk (layar kecil): Chat | Keranjang | Beli sekarang */
+.tz-burger { position: relative; }
+.tz-burger__dot { position: absolute; top: -3px; right: -3px; width: 11px; height: 11px; border-radius: 50%; background: #e0483f; border: 2px solid var(--ink-900); }
+.tz-mbar { display: none; }
+@media (max-width: 767px) {
+  .tz-mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 58; display: flex; align-items: stretch; gap: .5rem; padding: .55rem .75rem calc(.55rem + env(safe-area-inset-bottom));
+    background: var(--ink-900); border-top: 1px solid rgba(201,162,77,.3); box-shadow: 0 -14px 30px -18px rgba(0,0,0,.7); }
+  .tz-mbar a, .tz-mbar button, .tz-mbar > span { min-height: 46px; border-radius: 12px; }
+  .tz-mbar__chat { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .1rem; padding: 0 .85rem; font-size: .66rem; font-weight: 700; color: var(--gold-100); border: 1px solid rgba(201,162,77,.35); }
+  .tz-mbar__chat i { font-size: 1rem; color: var(--gold-300); }
+  .tz-mbar__cart { flex: none; width: 52px; display: grid; place-items: center; font-size: 1.05rem; color: var(--gold-300); background: rgba(201,162,77,.1); border: 1px solid rgba(201,162,77,.35); }
+  .tz-mbar__buy { flex: 1; font-size: .88rem; font-weight: 800; color: var(--ink-900); background: var(--gold-grad); }
+  .tz-mbar__out { flex: 1; display: grid; place-items: center; font-size: .82rem; font-weight: 700; color: #a8a08c; background: rgba(255,255,255,.06); }
+  body:has(.tz-mbar) { padding-bottom: 72px; }
+  body:has(.tz-mbar) .tz-totop { bottom: 88px; }
+}

@@ -12,6 +12,7 @@ $menuGroups = [
     'UTAMA' => [
         ['Dashboard', 'index.php', 'fa-gauge', true],
         ['Notifikasi', 'notifications.php', 'fa-bell', true],
+        ['Chat', 'chat.php', 'fa-comments', true],
     ],
     'KATALOG' => [
         ['Produk', 'products.php', 'fa-microchip', true],
@@ -38,10 +39,10 @@ $menuGroups = [
 $linkIndex = 0;
 
 // Angka pemberitahuan di samping menu (pesanan baru, pembayaran menunggu, stok menipis, notifikasi).
-$badgeKeys   = ['notifications.php' => 'notifications', 'orders.php' => 'orders', 'payments.php' => 'payments', 'inventory.php' => 'stock'];
+$badgeKeys   = ['notifications.php' => 'notifications', 'chat.php' => 'chat', 'orders.php' => 'orders', 'payments.php' => 'payments', 'inventory.php' => 'stock'];
 $badgeCounts = tzAdminBadgeCounts(getDbConnection(), (int) (currentAdmin()['id'] ?? 0));
 ?>
-<aside id="techzone-admin-sidebar" class="tz-aside" aria-label="Menu admin" data-counts-url="<?= e($base) ?>/api/admin-counts.php">
+<aside id="techzone-admin-sidebar" class="tz-aside" aria-label="Menu admin" data-counts-url="<?= e($base) ?>/api/admin-counts.php?scope=admin">
   <div class="tz-aside__head">
     <div class="tz-aside__brand">
       <span class="tz-logo__mark"><i class="fa-solid fa-microchip"></i></span>

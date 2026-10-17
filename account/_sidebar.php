@@ -15,6 +15,9 @@ try {
     $unreadNotif = 0;
 }
 
+require_once __DIR__ . '/../includes/chat_helpers.php';
+$unreadChat = tzChatUnreadTotal(getDbConnection(), 'user', (int) $_SESSION['user_id']);
+
 $accountMenu = [
     ['Dashboard', 'index.php', 'fa-gauge', true],
     ['Profil', 'profile.php', 'fa-user', false],
@@ -23,6 +26,7 @@ $accountMenu = [
     ['Riwayat Transaksi', 'transactions.php', 'fa-receipt', true],
     ['Wishlist', 'wishlist.php', 'fa-heart', true],
     ['Notifikasi', 'notifications.php', 'fa-bell', true],
+    ['Chat Admin', '../chat.php', 'fa-comments', true],
     ['Ubah Password', 'change-password.php', 'fa-key', false],
 ];
 ?>
@@ -30,13 +34,16 @@ $accountMenu = [
   <nav class="bg-white border border-gray-100 rounded-xl p-3 space-y-1 md:sticky md:top-20 shadow-card transition-shadow hover:shadow-lg">
     <?php foreach ($accountMenu as [$label, $file, $icon, $available]): ?>
       <?php if ($available): ?>
-        <a href="<?= e($base) ?>/account/<?= e($file) ?>"
+        <a href="<?= e($base) ?>/<?= strpos($file, '../') === 0 ? e(substr($file, 3)) : 'account/' . e($file) ?>"
            class="relative flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group
            <?= $currentUri === $file ? 'bg-gradient-to-r from-cyan-50 to-cyan-50/40 text-cyan-700 shadow-sm' : 'text-gray-600 hover:bg-gray-50 hover:pl-4' ?>">
           <?php if ($currentUri === $file): ?>
             <span class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-cyan-500 rounded-r-full"></span>
           <?php endif; ?>
           <span><i class="fa-solid <?= $icon ?> w-4 <?= $currentUri === $file ? 'text-cyan-600' : 'text-gray-400 group-hover:text-cyan-500' ?> transition-colors"></i> <?= e($label) ?></span>
+          <?php if ($file === '../chat.php' && $unreadChat > 0): ?>
+            <span class="bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center animate-pulse-glow"><?= $unreadChat > 9 ? '9+' : $unreadChat ?></span>
+          <?php endif; ?>
           <?php if ($file === 'notifications.php' && $unreadNotif > 0): ?>
             <span class="bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center animate-pulse-glow"><?= $unreadNotif > 9 ? '9+' : $unreadNotif ?></span>
           <?php endif; ?>

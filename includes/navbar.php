@@ -17,7 +17,10 @@ if ($navUser) {
 }
 
 $navUnreadNotif = 0;
+$navUnreadChat  = 0;
 if ($navUser) {
+    require_once __DIR__ . '/chat_helpers.php';
+    $navUnreadChat = tzChatUnreadTotal(getDbConnection(), 'user', (int) $navUser['id']);
     require_once __DIR__ . '/notification_helpers.php';
     try {
         $navUnreadNotif = getUnreadNotificationCount(getDbConnection(), (int) $navUser['id']);
@@ -42,7 +45,7 @@ if ($navUser) {
 <header id="techzone-header" class="tz-nav">
   <nav class="tz-nav__inner">
     <div class="tz-nav__brand">
-      <button id="techzone-menu-trigger" type="button" aria-label="Buka menu" class="tz-burger"><i class="fa-solid fa-bars-staggered"></i><span class="tz-burger__label">Menu</span></button>
+      <button id="techzone-menu-trigger" type="button" aria-label="Buka menu" class="tz-burger"><i class="fa-solid fa-bars-staggered"></i><span class="tz-burger__label">Menu</span><?php if ($navUnreadChat > 0): ?><span class="tz-burger__dot" aria-hidden="true"></span><?php endif; ?></button>
       <a href="<?= e($base) ?>/index.php" class="tz-logo" aria-label="TechZone">
         <span class="tz-logo__mark"><i class="fa-solid fa-microchip"></i></span>
         <span class="tz-logo__text">Tech<em class="gradient-text">Zone</em></span>
@@ -135,6 +138,7 @@ if ($navUser) {
             ['Pesanan Saya', 'account/orders.php', 'fa-box', 0],
             ['Riwayat Transaksi', 'account/transactions.php', 'fa-receipt', 0],
             ['Wishlist', 'account/wishlist.php', 'fa-heart', 0],
+            ['Chat Admin', 'chat.php', 'fa-comments', $navUnreadChat],
             ['Notifikasi', 'account/notifications.php', 'fa-bell', $navUnreadNotif],
         ];
     } else {

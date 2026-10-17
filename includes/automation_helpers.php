@@ -422,7 +422,7 @@ function runScheduledTasks(?PDO $pdo = null, bool $force = false): array
  */
 function tzAdminBadgeCounts(PDO $pdo, int $adminId): array
 {
-    $c = ['notifications' => 0, 'orders' => 0, 'payments' => 0, 'stock' => 0];
+    $c = ['notifications' => 0, 'orders' => 0, 'payments' => 0, 'stock' => 0, 'chat' => 0];
     try {
         $c['notifications'] = getUnreadNotificationCount($pdo, $adminId);
 
@@ -439,6 +439,9 @@ function tzAdminBadgeCounts(PDO $pdo, int $adminId): array
     } catch (Throwable $e) {
         error_log('[TechZone][AdminCounts] ' . $e->getMessage());
     }
+    // Pesan chat belum dibaca (0 bila tabel chat belum ada; tidak dicatat sebagai error).
+    require_once __DIR__ . '/chat_helpers.php';
+    $c['chat'] = tzChatUnreadTotal($pdo, 'admin');
     return $c;
 }
 

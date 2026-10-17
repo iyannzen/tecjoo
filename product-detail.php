@@ -128,7 +128,7 @@ require __DIR__ . '/includes/navbar.php';
       <p class="text-sm text-gray-600 leading-relaxed mb-6"><?= e($product['short_description']) ?></p>
 
       <?php if ((int) $product['stock'] > 0): ?>
-      <form action="<?= e(techzoneBaseUrl()) ?>/actions/cart.php" method="POST" class="flex items-center gap-3 mb-6">
+      <form id="techzone-cart-form" action="<?= e(techzoneBaseUrl()) ?>/actions/cart.php" method="POST" class="flex items-center gap-3 mb-6">
         <?= csrfField() ?>
         <input type="hidden" name="action" value="add">
         <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
@@ -155,6 +155,11 @@ require __DIR__ . '/includes/navbar.php';
         <p class="text-xs text-gray-500 -mt-3 mb-5"><i class="fa-solid fa-lock mr-1 text-cyan-600"></i>Masuk dulu untuk menambah ke keranjang, membeli, atau menyimpan ke wishlist. <a href="<?= e(techzoneBaseUrl()) ?>/login.php" class="text-cyan-600 font-semibold hover:underline">Masuk</a></p>
       <?php endif; ?>
 
+      <div class="flex items-center flex-wrap gap-x-5 gap-y-3">
+      <a href="<?= e(techzoneBaseUrl()) ?>/chat.php?product=<?= e(rawurlencode($product['slug'])) ?>" id="techzone-chat-btn"
+         class="inline-flex items-center gap-2 text-sm font-semibold text-navy-900 border border-gray-300 hover:border-cyan-400 hover:text-cyan-600 rounded-lg px-4 py-2 transition-all hover:scale-105">
+        <i class="fa-regular fa-comments"></i>Chat Admin
+      </a>
       <form action="<?= e(techzoneBaseUrl()) ?>/actions/wishlist.php" method="POST" class="inline">
         <?= csrfField() ?>
         <input type="hidden" name="product_id" value="<?= (int) $product['id'] ?>">
@@ -163,6 +168,7 @@ require __DIR__ . '/includes/navbar.php';
           <i class="fa-<?= $inWishlist ? 'solid' : 'regular' ?> fa-heart mr-1.5 <?= $inWishlist ? 'animate-scale-in' : '' ?>"></i><?= $inWishlist ? 'Tersimpan di Wishlist' : 'Simpan ke Wishlist' ?>
         </button>
       </form>
+      </div>
 
       <div class="mt-6 pt-6 border-t border-gray-100 grid grid-cols-2 gap-3 text-xs text-gray-600">
         <div class="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2"><i class="fa-solid fa-weight-hanging w-4 text-cyan-500"></i> Berat: <?= (int)$product['weight'] ?> gram</div>
@@ -273,6 +279,17 @@ require __DIR__ . '/includes/navbar.php';
   <?php renderProductSection('Produk Terkait', 'fa-shapes', $relatedProducts); ?>
   <?php renderProductSection('Terakhir Dilihat', 'fa-clock-rotate-left', $recentlyViewed); ?>
 </main>
+
+<?php $mbChat = techzoneBaseUrl() . '/chat.php?product=' . rawurlencode($product['slug']); ?>
+<div class="tz-mbar" role="group" aria-label="Aksi cepat produk">
+  <a href="<?= e($mbChat) ?>" class="tz-mbar__chat"><i class="fa-regular fa-comments"></i><span>Chat</span></a>
+  <?php if ((int) $product['stock'] > 0): ?>
+    <button type="submit" form="techzone-cart-form" class="tz-mbar__cart" aria-label="Tambah ke keranjang"><i class="fa-solid fa-cart-plus"></i></button>
+    <button type="submit" form="techzone-cart-form" formaction="<?= e(techzoneBaseUrl()) ?>/actions/cart.php?redirect=checkout" class="tz-mbar__buy">Beli sekarang</button>
+  <?php else: ?>
+    <span class="tz-mbar__out">Stok habis</span>
+  <?php endif; ?>
+</div>
 
 <script>
   function techzoneChangeQty(delta) {
