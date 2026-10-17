@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/helpers.php';
 require_once __DIR__ . '/../includes/cart_helpers.php';
+require_once __DIR__ . '/../includes/automation_helpers.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirectTo('register.php');
@@ -71,6 +72,10 @@ $stmt->execute([
 $newUserId = (int) $pdo->lastInsertId();
 
 logActivity($newUserId, 'register', 'User baru mendaftar melalui formulir registrasi.');
+
+// Notifikasi: admin tahu ada pengguna baru; pembeli mendapat sambutan.
+notifyAdmins($pdo, 'Pengguna baru mendaftar', $name . ' (' . $email . ') baru saja membuat akun.', 'user', 'admin/users.php?q=' . rawurlencode($email));
+createNotification($pdo, $newUserId, 'Selamat datang di TechZone', 'Akun Anda sudah aktif. Yuk jelajahi produk IoT pilihan kami.', 'info', 'products.php');
 
 // Langsung login-kan user setelah berhasil daftar.
 $guestSessionId = session_id();

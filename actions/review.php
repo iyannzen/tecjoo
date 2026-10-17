@@ -8,6 +8,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/product_helpers.php';
+require_once __DIR__ . '/../includes/automation_helpers.php';
 
 requireUserLogin();
 
@@ -71,6 +72,15 @@ try {
     $pdo->commit();
 
     logActivity($userId, 'submit_review', 'Memberikan review untuk produk #' . $productId . ' pada order ' . $orderNumber);
+
+    // Notifikasi admin: review baru masuk.
+    try {
+        $pn = $pdo->prepare('SELECT name FROM products WHERE id = :id');
+        $pn->execute([':id' => $productId]);
+        notifyAdmins($pdo, 'Review baru (' . $rating . '★)', ((string) ($_SESSION['name'] ?? 'Pembeli')) . ' mereview ' . ((string) $pn->fetchColumn() ?: 'produk') . '.', 'review', 'admin/reviews.php');
+    } catch (Throwable $e) {
+        error_log('[TechZone][Review Notify] ' . $e->getMessage());
+    }
     setFlashMessage('success', 'Terima kasih! Review Anda berhasil disimpan.');
 } catch (Throwable $e) {
     if ($pdo->inTransaction()) $pdo->rollBack();

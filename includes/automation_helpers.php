@@ -147,11 +147,11 @@ function buildOrderTimeline(array $order, array $history): array
  * ====================================================================== */
 
 /** Kirim notifikasi ke semua admin aktif. */
-function notifyAdmins(PDO $pdo, string $title, string $message, string $type = 'info'): void
+function notifyAdmins(PDO $pdo, string $title, string $message, string $type = 'info', ?string $link = null): void
 {
     try {
         foreach ($pdo->query("SELECT id FROM users WHERE role = 'admin' AND status = 'active'")->fetchAll() as $admin) {
-            createNotification($pdo, (int) $admin['id'], $title, $message, $type);
+            createNotification($pdo, (int) $admin['id'], $title, $message, $type, $link);
         }
     } catch (Throwable $e) {
         error_log('[TechZone][NotifyAdmins] ' . $e->getMessage());

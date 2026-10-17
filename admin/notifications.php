@@ -59,14 +59,6 @@ $stmt = $pdo->prepare('SELECT * FROM notifications WHERE user_id = :uid ORDER BY
 $stmt->execute([':uid' => $adminId]);
 $notifications = $stmt->fetchAll();
 
-$typeMeta = [
-    'order'   => ['fa-box', 'bg-blue-50 text-blue-600'],
-    'payment' => ['fa-money-check-dollar', 'bg-emerald-50 text-emerald-600'],
-    'stock'   => ['fa-triangle-exclamation', 'bg-amber-50 text-amber-600'],
-    'cart'    => ['fa-cart-shopping', 'bg-cyan-50 text-cyan-600'],
-    'info'    => ['fa-bell', 'bg-gray-100 text-gray-500'],
-];
-
 $pageTitle = 'Notifikasi | TechZone Admin';
 require __DIR__ . '/../includes/header.php';
 ?>
@@ -109,7 +101,7 @@ require __DIR__ . '/../includes/header.php';
       <?php else: ?>
         <div class="bg-white border border-gray-100 rounded-2xl shadow-card divide-y divide-gray-50 overflow-hidden">
           <?php foreach ($notifications as $n):
-              [$icon, $tone] = $typeMeta[$n['type']] ?? $typeMeta['info']; ?>
+              [$icon, $tone] = tzNotificationMeta((string) $n['type']); ?>
             <div class="flex gap-4 p-4 <?= $n['is_read'] ? '' : 'bg-cyan-50/60' ?>">
               <span class="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center <?= $tone ?>"><i class="fa-solid <?= $icon ?>"></i></span>
               <div class="flex-1 min-w-0">
@@ -120,7 +112,7 @@ require __DIR__ . '/../includes/header.php';
                 </div>
                 <p class="text-sm text-gray-600 mt-0.5"><?= e($n['message']) ?></p>
                 <div class="flex items-center gap-4 mt-1.5">
-                  <?php if ($nLink): ?><a href="?open=<?= (int) $n['id'] ?>" class="text-[11px] text-cyan-600 font-semibold hover:underline"><?= $n['type'] === 'stock' ? 'Kelola stok' : 'Lihat pesanan' ?> <i class="fa-solid fa-arrow-right text-[9px]"></i></a><?php endif; ?>
+                  <?php if ($nLink): ?><a href="?open=<?= (int) $n['id'] ?>" class="text-[11px] text-cyan-600 font-semibold hover:underline"><?= e(tzNotificationLinkLabel($n)) ?> <i class="fa-solid fa-arrow-right text-[9px]"></i></a><?php endif; ?>
                   <?php if (!$n['is_read']): ?>
                   <form method="POST"><?= csrfField() ?><input type="hidden" name="form_action" value="mark_read"><input type="hidden" name="page" value="<?= $page ?>"><input type="hidden" name="notification_id" value="<?= (int) $n['id'] ?>">
                     <button type="submit" class="text-[11px] text-cyan-600 hover:underline">Tandai dibaca</button>

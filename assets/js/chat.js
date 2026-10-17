@@ -54,7 +54,7 @@
         lastDay = m.day;
         box.appendChild(el('div', 'tz-chat__day', m.dayText));
       }
-      var row = el('div', 'tz-cm ' + (m.sender === 'bot' ? 'tz-cm--bot' : (m.mine ? 'tz-cm--me' : 'tz-cm--them')));
+      var row = el('div', 'tz-cm ' + (m.mine ? 'tz-cm--me' : 'tz-cm--them') + (m.sender === 'bot' ? ' tz-cm--bot' : ''));
       var bubble = el('div', 'tz-cm__bubble');
 
       if (m.type === 'product') {

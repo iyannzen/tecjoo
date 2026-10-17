@@ -8,6 +8,7 @@
  */
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/product_helpers.php';
+require_once __DIR__ . '/notification_helpers.php';
 
 const TZ_CHAT_MAX_LEN   = 1000;  // panjang maksimal satu pesan
 const TZ_CHAT_FLOOD_MAX = 30;    // maks. pesan user per thread per menit
@@ -117,7 +118,7 @@ function tzChatShortTime(?string $datetime): string
 }
 
 /** Data kartu produk (untuk tampilan) dari satu baris tabel products. */
-function tzChatProductCard(?array $p): ?array
+function tzChatProductCard(?array $p, bool $forAdmin = false): ?array
 {
     if (!$p || empty($p['id'])) {
         return null;
@@ -129,7 +130,10 @@ function tzChatProductCard(?array $p): ?array
         'price' => formatRupiah(effectivePrice($p)),
         'old'   => (!empty($p['discount_price']) && effectivePrice($p) < (float) $p['price']) ? formatRupiah($p['price']) : '',
         'image' => productImageUrl($p),
-        'url'   => $base . '/product-detail.php?slug=' . rawurlencode((string) $p['slug']),
+        // Admin dibawa ke halaman kelola produk (bukan etalase), agar tetap di area admin.
+        'url'   => $forAdmin
+            ? $base . '/admin/product-edit.php?id=' . (int) $p['id']
+            : $base . '/product-detail.php?slug=' . rawurlencode((string) $p['slug']),
     ];
 }
 
@@ -225,7 +229,43 @@ function tzChatAddMessage(PDO $pdo, int $threadId, string $sender, ?int $senderI
         "UPDATE chat_threads SET last_sender = :s, last_preview = :pv, last_message_at = NOW() $inc WHERE id = :id"
     )->execute([':s' => $sender, ':pv' => tzChatPreview($type, $body), ':id' => $threadId]);
 
+    if ($sender === 'user' || $sender === 'admin') {
+        tzChatNotify($pdo, $threadId, $sender, tzChatPreview($type, $body));
+    }
     return $msgId;
+}
+
+/**
+ * Kirim notifikasi lonceng untuk pesan baru. Satu percakapan = satu notifikasi belum dibaca (diperbarui).
+ * Pesan user -> semua admin (tujuan admin/chat.php); pesan admin -> pembeli pemilik percakapan.
+ */
+function tzChatNotify(PDO $pdo, int $threadId, string $sender, string $preview): void
+{
+    try {
+        $st = $pdo->prepare(
+            'SELECT t.user_id, u.name AS user_name, p.name AS product_name
+             FROM chat_threads t LEFT JOIN users u ON u.id = t.user_id LEFT JOIN products p ON p.id = t.product_id
+             WHERE t.id = :id LIMIT 1'
+        );
+        $st->execute([':id' => $threadId]);
+        $t = $st->fetch();
+        if (!$t) {
+            return;
+        }
+        $prod = (string) ($t['product_name'] ?? 'produk');
+        if ($sender === 'user') {
+            $link  = 'admin/chat.php?thread=' . $threadId;
+            $title = 'Chat baru dari ' . ($t['user_name'] ?: 'pembeli');
+            $msg   = $prod . ': ' . $preview;
+            foreach ($pdo->query("SELECT id FROM users WHERE role = 'admin' AND status = 'active'")->fetchAll() as $a) {
+                tzNotifyOrBump($pdo, (int) $a['id'], $title, $msg, 'chat', $link);
+            }
+        } else {
+            tzNotifyOrBump($pdo, (int) $t['user_id'], 'Balasan baru dari admin', $prod . ': ' . $preview, 'chat', 'chat.php?thread=' . $threadId);
+        }
+    } catch (Throwable $e) {
+        error_log('[TechZone][Chat Notify] ' . $e->getMessage());
+    }
 }
 
 /** Bentuk satu pesan menjadi array siap-JSON. $viewerRole menentukan "mine". */
@@ -236,13 +276,14 @@ function tzChatFormatMessage(array $m, string $viewerRole): array
         $card = tzChatProductCard(!empty($m['p_id']) ? [
             'id' => $m['p_id'], 'name' => $m['p_name'], 'slug' => $m['p_slug'], 'price' => $m['p_price'],
             'discount_price' => $m['p_discount'], 'main_image' => $m['p_image'],
-        ] : null);
+        ] : null, $viewerRole === 'admin');
     }
     $ts = strtotime($m['created_at']);
     return [
         'id'      => (int) $m['id'],
         'sender'  => $m['sender'],
-        'mine'    => $m['sender'] === $viewerRole,
+        // Sapaan chatbot adalah milik toko: di sisi admin tampil di kanan (sebagai "saya"), di sisi pembeli di kiri.
+        'mine'    => $m['sender'] === $viewerRole || ($viewerRole === 'admin' && $m['sender'] === 'bot'),
         'type'    => $m['type'],
         'body'    => (string) ($m['body'] ?? ''),
         'product' => $card,
@@ -275,6 +316,8 @@ function tzChatMarkRead(PDO $pdo, int $threadId, string $role): void
 {
     $col = $role === 'admin' ? 'admin_unread' : 'user_unread';
     $pdo->prepare("UPDATE chat_threads SET $col = 0 WHERE id = :id AND $col > 0")->execute([':id' => $threadId]);
+    // Notifikasi lonceng untuk percakapan ini ikut dianggap sudah dibaca.
+    tzMarkNotificationsReadByLink($pdo, 'chat', ($role === 'admin' ? 'admin/chat.php' : 'chat.php') . '?thread=' . $threadId);
 }
 
 /**

@@ -97,7 +97,7 @@ require __DIR__ . '/../includes/navbar.php';
           <?php foreach ($notifications as $n): ?>
           <div class="bg-white border <?= $n['is_read'] ? 'border-gray-100' : 'border-cyan-200 bg-cyan-50/30' ?> rounded-xl p-4 flex items-start gap-3">
             <span class="w-9 h-9 rounded-lg bg-navy-50 text-navy-700 flex items-center justify-center shrink-0">
-              <i class="fa-solid <?= e($typeIcon[$n['type']] ?? 'fa-bell') ?>"></i>
+              <i class="fa-solid <?= e(tzNotificationMeta((string) $n['type'])[0]) ?>"></i>
             </span>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-2">
@@ -109,7 +109,7 @@ require __DIR__ . '/../includes/navbar.php';
               </div>
               <p class="text-xs text-gray-500 mt-0.5"><?= e($n['message']) ?></p>
               <div class="flex items-center gap-4 mt-1.5">
-                <?php if ($nLink): ?><a href="?open=<?= (int) $n['id'] ?>" class="text-[11px] text-cyan-600 font-semibold hover:underline"><?= $n['type'] === 'cart' ? 'Buka keranjang' : 'Lihat pesanan' ?> <i class="fa-solid fa-arrow-right text-[9px]"></i></a><?php endif; ?>
+                <?php if ($nLink): ?><a href="?open=<?= (int) $n['id'] ?>" class="text-[11px] text-cyan-600 font-semibold hover:underline"><?= e(tzNotificationLinkLabel($n)) ?> <i class="fa-solid fa-arrow-right text-[9px]"></i></a><?php endif; ?>
                 <?php if (!$n['is_read']): ?>
                 <form method="POST"><?= csrfField() ?><input type="hidden" name="form_action" value="mark_read"><input type="hidden" name="page" value="<?= $page ?>"><input type="hidden" name="notification_id" value="<?= (int) $n['id'] ?>">
                   <button type="submit" class="text-[11px] text-cyan-600 hover:underline">Tandai dibaca</button>

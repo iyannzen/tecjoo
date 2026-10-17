@@ -62,10 +62,10 @@ require __DIR__ . '/../includes/header.php';
             </header>
 
             <?php if ($prod): ?>
-            <a class="tz-chat__aboutprod" href="<?= e($prod['url']) ?>" target="_blank" rel="noopener">
+            <a class="tz-chat__aboutprod" href="<?= e($base) ?>/admin/product-edit.php?id=<?= (int) $prod['id'] ?>">
               <img src="<?= e($prod['image']) ?>" alt="">
               <span class="tz-chat__prodtxt"><small>Menanyakan produk</small><b><?= e($prod['name']) ?></b><span><?= e($prod['price']) ?></span></span>
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <i class="fa-solid fa-chevron-right"></i>
             </a>
             <?php endif; ?>
 
