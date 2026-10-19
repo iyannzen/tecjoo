@@ -3,8 +3,8 @@
  * TechZone - Konfigurasi Pembayaran (Simulasi Lokal)
  *
  * Metode pembayaran:
- *   - midtrans : Payment gateway Midtrans Snap (VA, QRIS, e-wallet, kartu) -- otomatis
- *                lunas via webhook (lihat payment/midtrans.php & midtrans-notify.php)
+ *   - midtrans : Midtrans Snap (VA, QRIS, e-wallet, kartu) untuk memilih metode; pembayaran
+ *                diklaim lalu dikonfirmasi admin (payment/midtrans-claim.php, admin/payments.php)
  *   - qris / transfer / cod : alur manual (diverifikasi admin) -- lihat actions/payment.php
  *
  * Nilai-nilai pembayaran (nomor rekening, gambar QRIS, ongkir, dsb)

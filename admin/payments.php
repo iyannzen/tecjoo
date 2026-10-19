@@ -119,7 +119,7 @@ if ($statusFilter !== '' && in_array($statusFilter, getValidPaymentStatuses(), t
 $whereSql = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
 $stmt = $pdo->prepare(
-    "SELECT p.*, o.order_number, o.total AS order_total, u.name AS user_name, u.email AS user_email
+    "SELECT p.*, o.order_number, o.total AS order_total, o.payment_channel, u.name AS user_name, u.email AS user_email
      FROM payments p
      JOIN orders o ON o.id = p.order_id
      JOIN users u ON u.id = o.user_id
@@ -140,7 +140,7 @@ require __DIR__ . '/../includes/header.php';
 
     <main class="p-6">
       <h1 class="reveal text-2xl font-extrabold text-navy-900 mb-1">Verifikasi Pembayaran</h1>
-      <p class="text-sm text-gray-500 mb-6">Konfirmasi pembayaran QRIS &amp; Transfer Bank yang diklaim oleh pelanggan.</p>
+      <p class="text-sm text-gray-500 mb-6">Konfirmasi pembayaran QRIS, Transfer Bank &amp; Midtrans yang diklaim oleh pelanggan. Setelah dikonfirmasi, pelanggan otomatis diarahkan ke tahap pesanan diproses.</p>
 
       <div class="flex flex-wrap gap-2 mb-5">
         <?php
@@ -174,6 +174,9 @@ require __DIR__ . '/../includes/header.php';
                 <div class="flex items-center gap-2 mb-1">
                   <p class="text-sm font-bold text-navy-900"><?= e($p['order_number']) ?></p>
                   <span class="text-[10px] uppercase font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded"><?= e($p['payment_method']) ?></span>
+                  <?php if (!empty($p['payment_channel'])): ?>
+                    <span class="text-[10px] font-bold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded"><?= e($p['payment_channel']) ?></span>
+                  <?php endif; ?>
                 </div>
                 <p class="text-xs text-gray-500"><?= e($p['user_name']) ?> &middot; <?= e($p['user_email']) ?></p>
                 <p class="text-xs text-gray-400 mt-1">Transaksi: <?= e($p['transaction_id']) ?> &middot; <?= e(formatTanggalIndo($p['created_at'], true)) ?></p>

@@ -1434,19 +1434,25 @@ body.tz-chatpage .tz-footer, body.tz-chatpage .tz-totop { display: none; }
   .tz-chat__form textarea { font-size: 16px; }
 }
 
-/* bar aksi bawah di halaman produk (layar kecil): Chat | Keranjang | Beli sekarang */
+/* bar aksi bawah di halaman produk (mobile & desktop, ikut scroll): Chat | Tambah ke Keranjang | Beli Sekarang */
 .tz-burger { position: relative; }
 .tz-burger__dot { position: absolute; top: -3px; right: -3px; width: 11px; height: 11px; border-radius: 50%; background: #e0483f; border: 2px solid var(--ink-900); }
-.tz-mbar { display: none; }
-@media (max-width: 767px) {
-  .tz-mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 58; display: flex; align-items: stretch; gap: .5rem; padding: .55rem .75rem calc(.55rem + env(safe-area-inset-bottom));
-    background: var(--ink-900); border-top: 1px solid rgba(201,162,77,.3); box-shadow: 0 -14px 30px -18px rgba(0,0,0,.7); }
-  .tz-mbar a, .tz-mbar button, .tz-mbar > span { min-height: 46px; border-radius: 12px; }
-  .tz-mbar__chat { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .1rem; padding: 0 .85rem; font-size: .66rem; font-weight: 700; color: var(--gold-100); border: 1px solid rgba(201,162,77,.35); }
-  .tz-mbar__chat i { font-size: 1rem; color: var(--gold-300); }
-  .tz-mbar__cart { flex: none; width: 52px; display: grid; place-items: center; font-size: 1.05rem; color: var(--gold-300); background: rgba(201,162,77,.1); border: 1px solid rgba(201,162,77,.35); }
-  .tz-mbar__buy { flex: 1; font-size: .88rem; font-weight: 800; color: var(--ink-900); background: var(--gold-grad); }
-  .tz-mbar__out { flex: 1; display: grid; place-items: center; font-size: .82rem; font-weight: 700; color: #a8a08c; background: rgba(255,255,255,.06); }
-  body:has(.tz-mbar) { padding-bottom: 72px; }
-  body:has(.tz-mbar) .tz-totop { bottom: 88px; }
+.tz-mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 58; padding: .55rem .75rem calc(.55rem + env(safe-area-inset-bottom));
+  background: var(--ink-900); border-top: 1px solid rgba(201,162,77,.3); box-shadow: 0 -14px 30px -18px rgba(0,0,0,.7); }
+.tz-mbar__in { display: flex; align-items: stretch; gap: .5rem; max-width: 80rem; margin: 0 auto; }
+.tz-mbar a, .tz-mbar button, .tz-mbar__in > span { min-height: 46px; border-radius: 12px; }
+.tz-mbar__chat { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .1rem; padding: 0 .85rem; font-size: .66rem; font-weight: 700; color: var(--gold-100); border: 1px solid rgba(201,162,77,.35); }
+.tz-mbar__chat i { font-size: 1rem; color: var(--gold-300); }
+.tz-mbar__cart { flex: none; width: 52px; display: flex; align-items: center; justify-content: center; gap: .5rem; font-size: 1.05rem; color: var(--gold-300); background: rgba(201,162,77,.1); border: 1px solid rgba(201,162,77,.35); }
+.tz-mbar__cart-text { display: none; font-size: .88rem; font-weight: 700; color: var(--gold-100); }
+.tz-mbar__buy { flex: 1; font-size: .88rem; font-weight: 800; color: var(--ink-900); background: var(--gold-grad); }
+.tz-mbar__out { flex: 1; display: grid; place-items: center; font-size: .82rem; font-weight: 700; color: #a8a08c; background: rgba(255,255,255,.06); }
+body:has(.tz-mbar) { padding-bottom: 72px; }
+body:has(.tz-mbar) .tz-totop { bottom: 88px; }
+@media (min-width: 768px) {
+  .tz-mbar { padding-left: 2rem; padding-right: 2rem; }
+  .tz-mbar__chat { flex-direction: row; gap: .5rem; padding: 0 1.25rem; font-size: .88rem; }
+  .tz-mbar__cart { width: auto; flex: 1; padding: 0 1.25rem; }
+  .tz-mbar__cart-text { display: inline; }
+  .tz-mbar__buy { flex: 1.4; }
 }

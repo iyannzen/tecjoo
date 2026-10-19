@@ -3,9 +3,14 @@
  * TechZone - Halaman Pembayaran Midtrans (Snap)
  * Membuat Snap token (sekali per order, disimpan di payments.snap_token) lalu membuka popup Snap.
  * Jumlah tagihan SELALU diambil dari database, bukan dari input pengguna.
+ *
+ * Alur konfirmasi admin: setelah user memilih metode & menekan bayar di Snap, pembayaran
+ * diklaim (payment/midtrans-claim.php) -> status "Menunggu Verifikasi" -> admin konfirmasi
+ * di admin/payments.php -> halaman ini otomatis berpindah ke "Pembayaran Berhasil".
  */
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/midtrans_helpers.php';
 require_once __DIR__ . '/../config/payment.php';
 
@@ -79,16 +84,39 @@ $detailUrl = '../account/order-detail.php?order=' . urlencode($orderNumber);
     <?php if ($order['payment_status'] === 'paid'): ?>
       <div class="py-8">
         <i class="fa-solid fa-circle-check text-emerald-500 text-5xl mb-4 animate-scale-in"></i>
-        <p class="text-sm font-semibold text-navy-900">Pembayaran Berhasil</p>
-        <p class="text-xs text-gray-500 mt-1">Terima kasih! Pesanan Anda sedang diproses.</p>
+        <p class="text-sm font-semibold text-navy-900">Pembayaran Dikonfirmasi</p>
+        <p class="text-xs text-gray-500 mt-1">Terima kasih! Pembayaran Anda sudah dikonfirmasi admin dan pesanan sedang diproses.</p>
         <a href="<?= e($detailUrl) ?>" class="inline-block mt-5 ripple-wrap btn-glow bg-cyan-500 hover:bg-cyan-400 text-navy-900 font-semibold text-sm px-6 py-2.5 rounded-full transition">Lihat Detail Pesanan</a>
+        <p class="text-[11px] text-gray-400 mt-3">Anda akan diarahkan ke detail pesanan otomatis...</p>
       </div>
+      <script>setTimeout(function () { location.href = <?= json_encode($detailUrl) ?>; }, 3500);</script>
+
+    <?php elseif ($order['payment_status'] === 'waiting_verification'): ?>
+      <div class="py-8">
+        <i class="fa-solid fa-clock text-amber-500 text-5xl mb-4 animate-bounce-slow"></i>
+        <p class="text-sm font-semibold text-navy-900">Menunggu Konfirmasi Admin</p>
+        <p class="text-xs text-gray-500 mt-1">Pembayaran <?= e(formatRupiah($order['total'])) ?><?= !empty($order['payment_channel']) ? ' via ' . e($order['payment_channel']) : '' ?> sedang diverifikasi tim TechZone. Halaman ini akan berpindah otomatis setelah dikonfirmasi.</p>
+        <a href="<?= e($detailUrl) ?>" class="inline-block mt-5 border border-gray-200 text-gray-600 font-semibold text-sm px-6 py-2.5 rounded-full hover:bg-gray-50 transition">Lihat Detail Pesanan</a>
+      </div>
+      <script>
+        (function () {
+          var statusUrl = 'midtrans-status.php?order=<?= e(urlencode($orderNumber)) ?>';
+          setInterval(function () {
+            fetch(statusUrl, { credentials: 'same-origin' })
+              .then(function (r) { return r.json(); })
+              .then(function (d) { if (d.status && d.status !== 'waiting_verification') { location.reload(); } })
+              .catch(function () {});
+          }, 3000);
+        })();
+      </script>
 
     <?php elseif ($order['payment_status'] === 'expired' || $order['order_status'] === 'cancelled' || $order['payment_status'] === 'failed'): ?>
       <div class="py-8">
         <i class="fa-solid fa-circle-xmark text-red-500 text-5xl mb-4 animate-scale-in"></i>
         <p class="text-sm font-semibold text-navy-900">Pembayaran Tidak Dapat Dilanjutkan</p>
-        <p class="text-xs text-gray-500 mt-1">Pesanan ini sudah dibatalkan atau kadaluarsa. Silakan buat pesanan baru.</p>
+        <p class="text-xs text-gray-500 mt-1"><?= $order['payment_status'] === 'failed'
+            ? 'Pembayaran ditolak admin atau gagal. Hubungi kami lewat Chat bila ini kesalahan, atau buat pesanan baru.'
+            : 'Pesanan ini sudah dibatalkan atau kadaluarsa. Silakan buat pesanan baru.' ?></p>
         <a href="../products.php" class="inline-block mt-5 border border-gray-200 text-gray-600 font-semibold text-sm px-6 py-2.5 rounded-full hover:bg-gray-50 transition">Belanja Lagi</a>
       </div>
 
@@ -107,36 +135,54 @@ $detailUrl = '../account/order-detail.php?order=' . urlencode($orderNumber);
         <button id="techzone-pay-btn" type="button" class="relative w-full ripple-wrap btn-glow bg-cyan-500 hover:bg-cyan-400 text-navy-900 font-semibold py-3 rounded-lg transition">
           <i class="fa-solid fa-lock mr-1.5"></i>Bayar Sekarang
         </button>
-        <p id="techzone-pay-hint" class="text-[11px] text-gray-400 mt-3">Anda akan memilih metode pembayaran di jendela aman Midtrans. Status akan diperbarui otomatis setelah pembayaran diterima.</p>
+        <p id="techzone-pay-hint" class="text-[11px] text-gray-400 mt-3">Pilih metode pembayaran (GoPay, BCA, dll) lalu tekan bayar. Pembayaran Anda akan dikonfirmasi oleh admin, dan halaman ini berpindah otomatis setelah dikonfirmasi.</p>
 
         <script src="<?= e(MIDTRANS_SNAP_JS) ?>" data-client-key="<?= e(MIDTRANS_CLIENT_KEY) ?>"></script>
         <script>
           (function () {
             var token = <?= json_encode($payment['snap_token']) ?>;
-            var statusUrl = 'midtrans-status.php?order=<?= e(urlencode($orderNumber)) ?>';
+            var claimUrl = 'midtrans-claim.php';
             var selfUrl = 'midtrans.php?order=<?= e(urlencode($orderNumber)) ?>';
+            var csrf = <?= json_encode(csrfToken()) ?>;
+            var orderNumber = <?= json_encode($orderNumber) ?>;
             var btn = document.getElementById('techzone-pay-btn');
             var hint = document.getElementById('techzone-pay-hint');
-            var polling = null;
+            var busy = false;
 
-            function startPolling() {
-              if (polling) return;
-              hint.textContent = 'Menunggu konfirmasi pembayaran dari Midtrans...';
-              polling = setInterval(function () {
-                fetch(statusUrl, { credentials: 'same-origin' })
-                  .then(function (r) { return r.json(); })
-                  .then(function (d) {
-                    if (d.status && d.status !== 'unpaid') { location.href = selfUrl; }
-                  }).catch(function () {});
-              }, 5000);
+            // Klaim pembayaran -> status "Menunggu Verifikasi" + notifikasi ke admin, lalu muat ulang halaman.
+            function claim(source, result) {
+              if (busy) return;
+              busy = true;
+              btn.disabled = true;
+              hint.textContent = 'Mengirim pembayaran ke admin...';
+              var body = new URLSearchParams();
+              body.set('csrf_token', csrf);
+              body.set('order', orderNumber);
+              body.set('source', source);
+              if (result && result.payment_type) body.set('payment_type', result.payment_type);
+              if (result && result.va_numbers && result.va_numbers[0] && result.va_numbers[0].bank) body.set('bank', result.va_numbers[0].bank);
+              fetch(claimUrl, { method: 'POST', credentials: 'same-origin', body: body })
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                  if (d.status === 'unpaid') { // popup ditutup sebelum memilih metode
+                    busy = false; btn.disabled = false;
+                    hint.textContent = 'Pembayaran belum dipilih. Tekan "Bayar Sekarang" untuk melanjutkan.';
+                    return;
+                  }
+                  location.href = selfUrl;
+                })
+                .catch(function () {
+                  busy = false; btn.disabled = false;
+                  hint.textContent = 'Gagal mengirim pembayaran. Silakan coba lagi.';
+                });
             }
 
             function openSnap() {
               snap.pay(token, {
-                onSuccess: function () { location.href = selfUrl; },
-                onPending: function () { startPolling(); },
+                onSuccess: function (r) { claim('success', r); },
+                onPending: function (r) { claim('pending', r); },
                 onError:   function () { alert('Pembayaran gagal. Silakan coba lagi.'); },
-                onClose:   function () { startPolling(); }
+                onClose:   function () { claim('close'); }
               });
             }
             btn.addEventListener('click', openSnap);
