@@ -169,7 +169,7 @@ $detailUrl = '../account/order-detail.php?order=' . urlencode($orderNumber);
                     hint.textContent = 'Pembayaran belum dipilih. Tekan "Bayar Sekarang" untuk melanjutkan.';
                     return;
                   }
-                  location.href = selfUrl;
+                  location.replace(selfUrl);
                 })
                 .catch(function () {
                   busy = false; btn.disabled = false;
@@ -180,18 +180,29 @@ $detailUrl = '../account/order-detail.php?order=' . urlencode($orderNumber);
             // Selama popup terbuka, cek ke server tiap 2 detik. Begitu VA/QR terbentuk (metode dipilih),
             // server otomatis memindahkan pembayaran ke admin -> popup ditutup & halaman menunggu konfirmasi.
             var statusUrl = 'midtrans-status.php?order=' + encodeURIComponent(orderNumber);
+
+            // Tutup popup Snap sepenuhnya (tanpa perlu tombol kembali), lalu pindah ke halaman status.
+            function closeSnapAndGo() {
+              if (busy) return;
+              busy = true;
+              try { snap.hide(); } catch (e) {}
+              ['snap-midtrans', 'snap-overlay'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el && el.parentNode) el.parentNode.removeChild(el);
+              });
+              document.body.style.overflow = '';
+              // replace: halaman Snap tidak menambah riwayat, jadi tombol kembali tidak diperlukan.
+              location.replace(selfUrl);
+            }
+
             setInterval(function () {
               if (busy) return;
-              fetch(statusUrl, { credentials: 'same-origin' })
+              fetch(statusUrl, { credentials: 'same-origin', cache: 'no-store' })
                 .then(function (r) { return r.json(); })
                 .then(function (d) {
-                  if (d.status && d.status !== 'unpaid' && !busy) {
-                    busy = true;
-                    try { snap.hide(); } catch (e) {}
-                    location.href = selfUrl;
-                  }
+                  if (d.status && d.status !== 'unpaid') closeSnapAndGo();
                 }).catch(function () {});
-            }, 2000);
+            }, 1500);
 
             function openSnap() {
               snap.pay(token, {
