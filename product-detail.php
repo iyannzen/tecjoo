@@ -128,7 +128,7 @@ require __DIR__ . '/includes/navbar.php';
       <p class="text-sm text-gray-600 leading-relaxed mb-6"><?= e($product['short_description']) ?></p>
 
       <?php /* Aksi utama (Chat, Tambah ke Keranjang, Beli Sekarang) ada di bar bawah yang ikut scroll (.tz-mbar). Di sini hanya jumlah + wishlist. */ ?>
-      <div class="flex items-center flex-wrap gap-x-5 gap-y-3 mb-6">
+      <div class="flex items-center flex-wrap gap-5 mb-6">
       <?php if ((int) $product['stock'] > 0): ?>
       <form id="techzone-cart-form" action="<?= e(techzoneBaseUrl()) ?>/actions/cart.php" method="POST" class="inline-flex">
         <?= csrfField() ?>

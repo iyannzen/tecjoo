@@ -182,6 +182,7 @@ function midtransApplyStatus(PDO $pdo, array $n): string
     $result = 'ignored';
     $notifyUser = null;   // [userId, title, message]
     $notifyAdmin = null;  // [title, message]
+    $notifyAdminLink = null;
 
     try {
         $pdo->beginTransaction();
@@ -251,11 +252,17 @@ function midtransApplyStatus(PDO $pdo, array $n): string
                 $result = 'cancelled';
             }
         } elseif ($ts === 'pending') {
-            if ($channel && $order['payment_status'] === 'unpaid') {
-                $pdo->prepare("UPDATE orders SET payment_channel = :ch, updated_at = NOW() WHERE id = :id")
-                    ->execute([':ch' => $channel, ':id' => $order['id']]);
-                $pdo->prepare("UPDATE payments SET gateway_payload = :p, updated_at = NOW() WHERE order_id = :id AND status = 'unpaid'")
-                    ->execute([':p' => $payload, ':id' => $order['id']]);
+            // Pembeli sudah memilih metode & transaksi terbentuk (VA/QR dibuat) -> otomatis masuk
+            // antrean "Menunggu Verifikasi" admin; pembeli tidak perlu menyalin VA / memakai simulator.
+            if ($order['payment_status'] === 'unpaid' && $order['order_status'] === 'waiting_payment') {
+                $upd = $pdo->prepare("UPDATE payments SET status = 'waiting_verification', gateway_payload = :p, updated_at = NOW() WHERE order_id = :id AND status = 'unpaid'");
+                $upd->execute([':p' => $payload, ':id' => $order['id']]);
+                if ($upd->rowCount() > 0) {
+                    $pdo->prepare("UPDATE orders SET payment_status = 'waiting_verification', payment_channel = COALESCE(:ch, payment_channel), updated_at = NOW() WHERE id = :id")
+                        ->execute([':ch' => $channel, ':id' => $order['id']]);
+                    $notifyAdmin = ['Pembayaran Masuk', 'Pembayaran Midtrans' . ($channel ? ' (' . $channel . ')' : '') . ' untuk pesanan ' . $order['order_number'] . ' (' . formatRupiah($order['total']) . ') menunggu konfirmasi Anda.'];
+                    $notifyAdminLink = 'admin/payments.php?status=waiting_verification';
+                }
             }
             $result = 'pending';
         } elseif (in_array($ts, ['refund', 'partial_refund', 'chargeback', 'partial_chargeback'], true)) {
@@ -278,7 +285,8 @@ function midtransApplyStatus(PDO $pdo, array $n): string
         createNotification($pdo, $notifyUser[0], $notifyUser[1], $notifyUser[2], 'order');
     }
     if ($notifyAdmin) {
-        notifyAdmins($pdo, $notifyAdmin[0], $notifyAdmin[1], 'order');
+        $isClaim = $notifyAdminLink !== null;
+        notifyAdmins($pdo, $notifyAdmin[0], $notifyAdmin[1], $isClaim ? 'payment' : 'order', $notifyAdminLink);
     }
     return $result;
 }

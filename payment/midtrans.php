@@ -177,6 +177,22 @@ $detailUrl = '../account/order-detail.php?order=' . urlencode($orderNumber);
                 });
             }
 
+            // Selama popup terbuka, cek ke server tiap 2 detik. Begitu VA/QR terbentuk (metode dipilih),
+            // server otomatis memindahkan pembayaran ke admin -> popup ditutup & halaman menunggu konfirmasi.
+            var statusUrl = 'midtrans-status.php?order=' + encodeURIComponent(orderNumber);
+            setInterval(function () {
+              if (busy) return;
+              fetch(statusUrl, { credentials: 'same-origin' })
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                  if (d.status && d.status !== 'unpaid' && !busy) {
+                    busy = true;
+                    try { snap.hide(); } catch (e) {}
+                    location.href = selfUrl;
+                  }
+                }).catch(function () {});
+            }, 2000);
+
             function openSnap() {
               snap.pay(token, {
                 onSuccess: function (r) { claim('success', r); },
