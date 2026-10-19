@@ -13,10 +13,33 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirectTo('cart.php');
 }
 
-verifyCsrfToken($_POST['csrf_token'] ?? null);
+// Permintaan AJAX (tombol "tambah ke keranjang" tanpa pindah halaman) dibalas JSON.
+$isAjax = (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'fetch');
 
-// Pengunjung (belum login) hanya boleh melihat-lihat: semua aksi keranjang wajib login.
-requireUserLoginForAction('Silakan masuk terlebih dahulu untuk menambahkan produk ke keranjang.');
+function cartJson(array $data, int $status = 200): void
+{
+    http_response_code($status);
+    header('Content-Type: application/json');
+    echo json_encode($data);
+    exit;
+}
+
+if ($isAjax) {
+    $csrfPosted = (string) ($_POST['csrf_token'] ?? '');
+    if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $csrfPosted)) {
+        cartJson(['ok' => false, 'message' => 'Sesi kedaluwarsa. Silakan muat ulang halaman.'], 403);
+    }
+    if (!isUserLoggedIn()) {
+        $_SESSION['redirect_after_login'] = tzRelativeReturnPath($_SERVER['HTTP_REFERER'] ?? '', 'index.php');
+        setFlashMessage('error', 'Silakan masuk terlebih dahulu untuk menambahkan produk ke keranjang.');
+        cartJson(['ok' => false, 'login' => techzoneBaseUrl() . '/login.php']);
+    }
+} else {
+    verifyCsrfToken($_POST['csrf_token'] ?? null);
+
+    // Pengunjung (belum login) hanya boleh melihat-lihat: semua aksi keranjang wajib login.
+    requireUserLoginForAction('Silakan masuk terlebih dahulu untuk menambahkan produk ke keranjang.');
+}
 
 $pdo    = getDbConnection();
 $cartId = getOrCreateCartId($pdo);
@@ -34,6 +57,9 @@ switch ($action) {
         $product = $stmt->fetch();
 
         if (!$product) {
+            if ($isAjax) {
+                cartJson(['ok' => false, 'message' => 'Produk tidak ditemukan.']);
+            }
             setFlashMessage('error', 'Produk tidak ditemukan.');
             redirectTo('products.php');
         }
@@ -45,6 +71,9 @@ switch ($action) {
         $requestedQty = $existing ? ((int) $existing['quantity'] + $quantity) : $quantity;
 
         if ($requestedQty > (int) $product['stock']) {
+            if ($isAjax) {
+                cartJson(['ok' => false, 'message' => 'Jumlah produk melebihi stok yang tersedia.']);
+            }
             setFlashMessage('error', 'Jumlah produk melebihi stok yang tersedia.');
             redirectTo($_SERVER['HTTP_REFERER'] ?? 'products.php');
         }
@@ -63,6 +92,9 @@ switch ($action) {
             $insert->execute([':cid' => $cartId, ':pid' => $productId, ':qty' => $requestedQty, ':price' => $price]);
         }
 
+        if ($isAjax) {
+            cartJson(['ok' => true, 'message' => 'Produk ditambahkan ke keranjang.', 'count' => getCartItemCount($pdo, $cartId)]);
+        }
         setFlashMessage('success', 'Produk berhasil ditambahkan ke keranjang.');
         redirectTo($redirectAfter);
     }
@@ -102,6 +134,54 @@ switch ($action) {
         $update->execute([':qty' => $quantity, ':price' => $price, ':id' => $cartItemId]);
 
         setFlashMessage('success', 'Jumlah produk berhasil diperbarui.');
+        redirectTo('cart.php');
+    }
+
+    case 'update_all': {
+        // Satu tombol "Update Keranjang": perbarui jumlah semua item sekaligus (0 = hapus item).
+        $quantities = $_POST['quantities'] ?? [];
+        if (!is_array($quantities) || empty($quantities)) {
+            setFlashMessage('error', 'Tidak ada perubahan untuk disimpan.');
+            redirectTo('cart.php');
+        }
+
+        $itemStmt = $pdo->prepare(
+            'SELECT ci.id, p.name, p.stock, p.price, p.discount_price
+             FROM cart_items ci JOIN products p ON p.id = ci.product_id
+             WHERE ci.id = :id AND ci.cart_id = :cid LIMIT 1'
+        );
+        $updated = 0;
+        $removed = 0;
+        $errors  = [];
+
+        foreach ($quantities as $itemId => $qty) {
+            $itemId = (int) $itemId;
+            $qty    = (int) $qty;
+            $itemStmt->execute([':id' => $itemId, ':cid' => $cartId]);
+            $item = $itemStmt->fetch();
+            if (!$item) {
+                continue;
+            }
+            if ($qty <= 0) {
+                $pdo->prepare('DELETE FROM cart_items WHERE id = :id AND cart_id = :cid')->execute([':id' => $itemId, ':cid' => $cartId]);
+                $removed++;
+                continue;
+            }
+            if ($qty > (int) $item['stock']) {
+                $errors[] = $item['name'] . ' (stok ' . (int) $item['stock'] . ')';
+                continue;
+            }
+            $price = (!empty($item['discount_price']) && (float) $item['discount_price'] > 0) ? $item['discount_price'] : $item['price'];
+            $pdo->prepare('UPDATE cart_items SET quantity = :qty, price = :price, updated_at = NOW() WHERE id = :id AND cart_id = :cid')
+                ->execute([':qty' => $qty, ':price' => $price, ':id' => $itemId, ':cid' => $cartId]);
+            $updated++;
+        }
+
+        if ($errors) {
+            setFlashMessage('error', 'Jumlah melebihi stok untuk: ' . implode(', ', $errors) . '. Item lain sudah diperbarui.');
+        } else {
+            setFlashMessage('success', 'Keranjang berhasil diperbarui.');
+        }
         redirectTo('cart.php');
     }
 

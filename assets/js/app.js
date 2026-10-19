@@ -342,6 +342,104 @@
       document.addEventListener('visibilitychange', function () { if (!document.hidden) pollCounts(); });
     }
 
+    /* ---------- Tambah ke keranjang tanpa pindah halaman (barang "terbang" ke ikon keranjang) ---------- */
+    var cartLink = document.querySelector('.tz-nav__actions a[aria-label="Keranjang"]');
+
+    function tzToast(message, type) {
+      var old = document.querySelectorAll('.tz-toast[data-live]');
+      old.forEach(function (n) { n.remove(); });
+      var icon = type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check';
+      var t = document.createElement('div');
+      t.className = 'tz-toast tz-toast--' + (type === 'error' ? 'error' : 'success');
+      t.setAttribute('role', 'status');
+      t.setAttribute('data-live', '1');
+      t.innerHTML = '<span class="tz-toast__icon"><i class="fa-solid ' + icon + '"></i></span><p class="tz-toast__msg"></p>' +
+        '<button type="button" class="tz-toast__close" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button><span class="tz-toast__bar"></span>';
+      t.querySelector('.tz-toast__msg').textContent = message;
+      t.querySelector('.tz-toast__close').addEventListener('click', function () { t.classList.add('is-out'); });
+      document.body.appendChild(t);
+      setTimeout(function () { t.classList.add('is-out'); setTimeout(function () { t.remove(); }, 500); }, 3200);
+    }
+
+    function tzSetCartCount(count) {
+      if (!cartLink) return;
+      var badge = cartLink.querySelector('.tz-badge');
+      var txt = count > 9 ? '9+' : String(count);
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'tz-badge';
+        cartLink.appendChild(badge);
+      }
+      badge.textContent = txt;
+      badge.classList.remove('badge-pop'); void badge.offsetWidth; badge.classList.add('badge-pop');
+      cartLink.classList.remove('tz-cart-bump'); void cartLink.offsetWidth; cartLink.classList.add('tz-cart-bump');
+      document.querySelectorAll('.tz-drawer a[href$="cart.php"] .tz-dbadge').forEach(function (b) { b.textContent = txt; });
+    }
+
+    function tzFlyToCart(sourceEl, done) {
+      if (!cartLink || reduceMotion || !sourceEl) { done(); return; }
+      var from = sourceEl.getBoundingClientRect();
+      var to = cartLink.getBoundingClientRect();
+      if (!from.width || !to.width) { done(); return; }
+      var size = 72;
+      var fly = document.createElement('div');
+      fly.className = 'tz-fly';
+      var img = sourceEl.tagName === 'IMG' ? sourceEl : sourceEl.querySelector('img');
+      if (img && img.currentSrc) { fly.style.backgroundImage = 'url("' + img.currentSrc.replace(/"/g, '%22') + '")'; }
+      else { fly.className += ' tz-fly--icon'; fly.innerHTML = '<i class="fa-solid fa-cart-plus"></i>'; }
+      var sx = from.left + from.width / 2 - size / 2, sy = from.top + from.height / 2 - size / 2;
+      var ex = to.left + to.width / 2 - size / 2,   ey = to.top + to.height / 2 - size / 2;
+      fly.style.left = sx + 'px'; fly.style.top = sy + 'px';
+      document.body.appendChild(fly);
+      var dx = ex - sx, dy = ey - sy;
+      var lift = Math.min(140, Math.abs(dy) * 0.35 + 60); // lengkung ke atas dulu, lalu masuk ke keranjang
+      var anim = fly.animate([
+        { transform: 'translate(0,0) scale(1) rotate(0deg)', opacity: 1, offset: 0 },
+        { transform: 'translate(' + (dx * 0.45) + 'px,' + (dy * 0.45 - lift) + 'px) scale(.7) rotate(-8deg)', opacity: 1, offset: 0.5 },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.12) rotate(14deg)', opacity: .25, offset: 1 }
+      ], { duration: 850, easing: 'cubic-bezier(.45,.05,.55,.95)', fill: 'forwards' });
+      var finished = false;
+      function end() { if (finished) return; finished = true; fly.remove(); done(); }
+      anim.onfinish = end;
+      setTimeout(end, 1100); // pengaman
+    }
+
+    document.addEventListener('submit', function (e) {
+      var form = e.target;
+      if (!form || !form.matches || !form.matches('form[action*="actions/cart.php"]')) return;
+      var act = form.querySelector('input[name="action"]');
+      if (!act || act.value !== 'add') return;
+      var sub = e.submitter;
+      var fa = (sub && sub.getAttribute('formaction')) || '';
+      if (fa.indexOf('redirect=checkout') > -1) return; // "Beli Sekarang" tetap lanjut ke checkout
+      if (!window.fetch || !window.FormData) return;
+      e.preventDefault();
+      if (form.getAttribute('data-busy')) return;
+      form.setAttribute('data-busy', '1');
+
+      // Sumber animasi: foto produk (kartu produk / halaman detail), cadangan tombol itu sendiri.
+      var card = form.closest('.group');
+      var src = (card && card.querySelector('img')) || document.getElementById('techzone-main-image') || sub || form;
+
+      fetch(form.getAttribute('action'), {
+        method: 'POST',
+        body: new FormData(form),
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'fetch', 'Accept': 'application/json' }
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        form.removeAttribute('data-busy');
+        if (d && d.login) { window.location.href = d.login; return; }
+        if (!d || !d.ok) { tzToast((d && d.message) || 'Gagal menambahkan ke keranjang.', 'error'); return; }
+        tzFlyToCart(src, function () {
+          tzSetCartCount(d.count);
+          tzToast(d.message || 'Produk ditambahkan ke keranjang.', 'success');
+        });
+      }).catch(function () {
+        form.removeAttribute('data-busy');
+        form.submit(); // cadangan: kirim form biasa bila AJAX gagal
+      });
+    });
+
     // Mode ringan: efek berat (partikel, cahaya kursor, tilt 3D, tombol magnetik) sengaja tidak dipakai.
   });
 })();

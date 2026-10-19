@@ -74,8 +74,12 @@ require __DIR__ . '/includes/navbar.php';
   <?php else: ?>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-    <!-- DAFTAR ITEM -->
-    <div class="lg:col-span-2 space-y-3">
+    <!-- DAFTAR ITEM (satu form: tombol "Update Keranjang" memperbarui semua jumlah sekaligus) -->
+    <div class="lg:col-span-2">
+    <form id="techzone-cart-update" action="actions/cart.php" method="POST">
+      <?= csrfField() ?>
+      <input type="hidden" name="action" value="update_all">
+      <div class="space-y-3">
       <?php foreach ($items as $item):
         $activePrice = (!empty($item['discount_price']) && (float) $item['discount_price'] > 0) ? $item['discount_price'] : $item['price'];
         $isInactive  = $item['status'] !== 'active';
@@ -91,12 +95,7 @@ require __DIR__ . '/includes/navbar.php';
               <a href="product-detail.php?slug=<?= e($item['slug']) ?>" class="text-sm font-semibold text-navy-900 hover:text-cyan-600 line-clamp-2"><?= e($item['name']) ?></a>
               <p class="text-xs text-gray-400 mt-0.5"><?= e($item['brand']) ?></p>
             </div>
-            <form action="actions/cart.php" method="POST">
-              <?= csrfField() ?>
-              <input type="hidden" name="action" value="remove">
-              <input type="hidden" name="cart_item_id" value="<?= (int) $item['cart_item_id'] ?>">
-              <button type="submit" class="text-gray-300 hover:text-red-500 transition"><i class="fa-solid fa-trash"></i></button>
-            </form>
+            <button type="submit" form="cart-remove-<?= (int) $item['cart_item_id'] ?>" class="text-gray-300 hover:text-red-500 transition" aria-label="Hapus dari keranjang"><i class="fa-solid fa-trash"></i></button>
           </div>
 
           <?php if ($isInactive): ?>
@@ -106,23 +105,34 @@ require __DIR__ . '/includes/navbar.php';
           <?php endif; ?>
 
           <div class="flex items-center justify-between mt-3">
-            <form action="actions/cart.php" method="POST" class="flex items-center gap-2">
-              <?= csrfField() ?>
-              <input type="hidden" name="action" value="update">
-              <input type="hidden" name="cart_item_id" value="<?= (int) $item['cart_item_id'] ?>">
+            <div class="flex items-center gap-2">
               <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                 <button type="button" onclick="techzoneStep(this, -1)" class="w-7 h-8 text-gray-500 hover:text-navy-900 hover:bg-gray-100 text-sm transition-colors">-</button>
-                <input type="number" name="quantity" value="<?= (int) $item['quantity'] ?>" min="0" max="<?= (int) $item['stock'] ?>"
+                <input type="number" name="quantities[<?= (int) $item['cart_item_id'] ?>]" value="<?= (int) $item['quantity'] ?>" min="0" max="<?= (int) $item['stock'] ?>"
                        class="w-10 text-center text-xs border-x border-gray-300 h-8 focus:outline-none">
                 <button type="button" onclick="techzoneStep(this, 1)" class="w-7 h-8 text-gray-500 hover:text-navy-900 hover:bg-gray-100 text-sm transition-colors">+</button>
               </div>
-              <button type="submit" class="text-xs text-cyan-600 font-medium hover:underline hover:text-cyan-700 transition-colors">Update</button>
-            </form>
+            </div>
             <p class="text-sm font-bold text-navy-900"><?= e(formatRupiah($activePrice * (int) $item['quantity'])) ?></p>
           </div>
         </div>
       </div>
       <?php endforeach; ?>
+      </div>
+
+      <div class="tz-cartbar">
+        <a href="products.php" class="tz-cartbar__shop"><i class="fa-solid fa-arrow-left"></i> Lanjut Belanja</a>
+        <button type="submit" class="tz-cartbar__update ripple-wrap btn-glow"><i class="fa-solid fa-rotate"></i> Update Keranjang</button>
+      </div>
+    </form>
+
+    <?php foreach ($items as $item): ?>
+      <form id="cart-remove-<?= (int) $item['cart_item_id'] ?>" action="actions/cart.php" method="POST" class="hidden">
+        <?= csrfField() ?>
+        <input type="hidden" name="action" value="remove">
+        <input type="hidden" name="cart_item_id" value="<?= (int) $item['cart_item_id'] ?>">
+      </form>
+    <?php endforeach; ?>
     </div>
 
     <!-- RINGKASAN -->

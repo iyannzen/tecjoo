@@ -1456,3 +1456,18 @@ body:has(.tz-mbar) .tz-totop { bottom: 88px; }
   .tz-mbar__cart-text { display: inline; }
   .tz-mbar__buy { flex: 1.4; }
 }
+
+/* keranjang: tombol "Lanjut Belanja" + satu tombol "Update Keranjang" di bawah daftar */
+.tz-cartbar { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+.tz-cartbar > * { flex: 1 1 170px; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: .55rem; border-radius: 12px; font-size: .9rem; font-weight: 700; text-align: center; cursor: pointer; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.tz-cartbar__shop { color: inherit; border: 1px solid rgba(201,162,77,.45); background: transparent; }
+.tz-cartbar__shop:hover { border-color: var(--gold-300); transform: translateY(-2px); }
+.tz-cartbar__update { color: var(--ink-900); background: var(--gold-grad); border: 0; }
+.tz-cartbar__update:hover { transform: translateY(-2px); }
+
+/* animasi "terbang ke keranjang" + toast kecil (tambah ke keranjang tanpa pindah halaman) */
+.tz-fly { position: fixed; z-index: 10001; width: 72px; height: 72px; border-radius: 16px; overflow: hidden; pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,.45); border: 2px solid var(--gold-300); background: #fff center / cover no-repeat; will-change: transform, opacity; }
+.tz-fly--icon { display: grid; place-items: center; background: var(--gold-grad); color: var(--ink-900); font-size: 1.6rem; }
+.tz-cart-bump { animation: tz-cart-bump .55s var(--ease, ease) both; }
+@keyframes tz-cart-bump { 0% { transform: scale(1); } 35% { transform: scale(1.28) rotate(-8deg); } 70% { transform: scale(.95) rotate(4deg); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .tz-fly { display: none; } .tz-cart-bump { animation: none; } }
