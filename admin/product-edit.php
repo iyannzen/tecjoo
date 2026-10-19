@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
     $imgStmt->execute([':id' => $imgId, ':pid' => $productId]);
     $img = $imgStmt->fetch();
     if ($img) {
-        @unlink(__DIR__ . '/../uploads/products/' . $img['image']);
+        tzDeleteUploadedFile($img['image']);
         $pdo->prepare('DELETE FROM product_images WHERE id = :id')->execute([':id' => $imgId]);
         setFlashMessage('success', 'Gambar galeri dihapus.');
     }

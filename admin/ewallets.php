@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($old) {
             // Pesanan lama menyimpan nama channel sebagai teks, jadi aman dihapus.
             $pdo->prepare('DELETE FROM ewallet_channels WHERE id = :id')->execute([':id' => $id]);
-            if (!empty($old['logo_image']) && strpos($old['logo_image'], 'uploads/') === 0 && file_exists(__DIR__ . '/../' . $old['logo_image'])) {
-                @unlink(__DIR__ . '/../' . $old['logo_image']);
+            if (!empty($old['logo_image']) && strpos($old['logo_image'], 'uploads/') === 0) {
+                tzDeleteUploadedFile($old['logo_image']);
             }
             logActivity($admin['id'], 'delete_ewallet', 'Menghapus e-wallet: ' . $old['name']);
             setFlashMessage('success', 'E-wallet "' . $old['name'] . '" berhasil dihapus.');
@@ -108,8 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $pdo->prepare($sql . ' WHERE id=:id')->execute($params);
 
-                if (($logoImagePath !== null || $removeLogo) && $oldImg && strpos($oldImg, 'uploads/') === 0 && file_exists(__DIR__ . '/../' . $oldImg)) {
-                    @unlink(__DIR__ . '/../' . $oldImg);
+                if (($logoImagePath !== null || $removeLogo) && $oldImg && strpos($oldImg, 'uploads/') === 0) {
+                    tzDeleteUploadedFile($oldImg);
                 }
                 setFlashMessage('success', 'E-wallet berhasil diperbarui.');
                 logActivity($admin['id'], 'update_ewallet', 'Memperbarui e-wallet: ' . $name);

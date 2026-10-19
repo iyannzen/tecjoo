@@ -88,6 +88,9 @@ if (!move_uploaded_file($file['tmp_name'], $destination)) {
     redirectTo('payment/transfer.php?order=' . urlencode($orderNumber));
 }
 
+require_once __DIR__ . '/../includes/file_store.php';
+tzFileStoreSave('uploads/payments/' . $newFilename, $destination);
+
 try {
     $pdo->beginTransaction();
 
@@ -106,6 +109,7 @@ try {
         $pdo->rollBack();
     }
     @unlink($destination);
+    tzFileStoreDelete('uploads/payments/' . $newFilename);
     error_log('[TechZone][Upload Proof Error] ' . $e->getMessage());
     setFlashMessage('error', 'Terjadi kesalahan. Silakan coba kembali.');
 }

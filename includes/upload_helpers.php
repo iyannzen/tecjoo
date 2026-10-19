@@ -5,6 +5,7 @@
  * di-generate ulang. Dipakai untuk upload gambar produk, kategori, banner.
  */
 require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/file_store.php';
 
 function getAllowedImageExtensions(): array
 {
@@ -56,6 +57,9 @@ function handleImageUpload(array $file, string $subfolder, int $maxSizeBytes = 2
     if (!move_uploaded_file($file['tmp_name'], $destination)) {
         throw new RuntimeException('Gagal menyimpan file gambar.');
     }
+
+    // Simpan juga ke database agar tidak hilang saat server deploy ulang.
+    tzFileStoreSave('uploads/' . trim($subfolder, '/') . '/' . $newFilename, $destination);
 
     return $newFilename;
 }

@@ -94,8 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $oldStmt->execute([':id' => $id]);
             $oldImg = $oldStmt->fetchColumn();
             $pdo->prepare('DELETE FROM bank_accounts WHERE id = :id')->execute([':id' => $id]);
-            if ($oldImg && file_exists(__DIR__ . '/../' . $oldImg)) {
-                @unlink(__DIR__ . '/../' . $oldImg);
+            if ($oldImg) {
+                tzDeleteUploadedFile($oldImg);
             }
             logActivity($admin['id'], 'delete_bank_account', 'Menghapus rekening bank #' . $id);
             setFlashMessage('success', 'Rekening bank berhasil dihapus.');
@@ -150,8 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql .= ' WHERE id=:id';
                 $pdo->prepare($sql)->execute($params);
 
-                if (($logoImagePath !== null || $removeLogo) && $oldImg && file_exists(__DIR__ . '/../' . $oldImg)) {
-                    @unlink(__DIR__ . '/../' . $oldImg);
+                if (($logoImagePath !== null || $removeLogo) && $oldImg) {
+                    tzDeleteUploadedFile($oldImg);
                 }
                 setFlashMessage('success', 'Rekening bank berhasil diperbarui.');
                 logActivity($admin['id'], 'update_bank_account', 'Memperbarui rekening: ' . $bankName);

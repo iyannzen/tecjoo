@@ -19,6 +19,10 @@ require_once __DIR__ . '/../config/database.php';
 
 techzoneStartSession();
 
+// Kembalikan foto/file upload yang hilang akibat disk server sementara (Railway) dari database.
+require_once __DIR__ . '/file_store.php';
+tzFileStoreSync();
+
 /**
  * Redirect ke URL relatif terhadap base URL project, lalu hentikan eksekusi.
  */
